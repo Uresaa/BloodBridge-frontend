@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BloodBridge - Create Request</title>
-     <link rel="stylesheet" href="create_request.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="create_request.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -53,16 +53,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="locationInput">Reporting Location</label>
-                    <input type="text" id="locationInput" placeholder="e.g., City General Hospital" required>
-                    <span class="error-message" id="locationError"></span>
+                    <label class="form-label">My Location / Reporting Facility</label>
+                    <div class="location-gps-container" style="display: flex; gap: 10px;">
+                        <input type="text" id="locationInput" class="form-control" style="flex: 1;" placeholder="Click 'Use My Location' or type address..." /> 
+                        <button type="button" id="btnGeolocate" class="btn-secondary" style="white-space: nowrap;">
+                           Use My Location
+                        </button>
+                    </div>
+                    <span id="locationError" class="error-message"></span>
                 </div>
 
                 <div class="form-group">
                     <label>Blood Units Required (Bags)</label>
                     <div class="counter-input-container">
                         <button type="button" class="counter-btn" id="decrementUnits">-</button>
-                        <input type="number" id="unitCount" value="1" min="1" max="25" readonly>
+                        <input type="number" id="unitCount" value="1" min="1" max="25">
                         <button type="button" class="counter-btn" id="incrementUnits">+</button>
                     </div>
                 </div>
