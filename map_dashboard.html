@@ -1,26 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BloodBridge - Live Map Monitor</title>
-    <link rel="stylesheet" href="map_dashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet CSS & JS (OpenStreetMap) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="map_dashboard.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-      <nav class="navbar">
+    <!-- Leaflet CSS & JS (OpenStreetMap) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <nav class="navbar">
       <div class="nav-logo">
-        <img src="images/logo.png" alt="BloodBridge Logo" />
+        <a href="./index.html" class="logo">
+          <img src="images/logo.png" alt="BloodBridge Logo" />
+        </a>
       </div>
+      <button class="menu-toggle" id="menu-toggle">☰</button>
 
       <ul class="nav-links" id="nav-links">
-        <li><a href="map_dashboard.html">Dashboard</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="#how-it-works">How it Works</a></li>
         <li><a href="#urgent-requests">Urgent Requests</a></li>
         <li><a href="#stats">Our Impact</a></li>
@@ -34,9 +45,9 @@
     </nav>
 
     <div class="full-map-wrapper">
-        <div id="interactiveMap"></div>
+      <div id="interactiveMap"></div>
     </div>
 
     <script src="map_dashboard.js"></script>
-</body>
+  </body>
 </html>
