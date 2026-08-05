@@ -15,20 +15,27 @@
   </head>
 
   <body>
-   
-
     <nav class="navbar">
-      <div class="logo">Blood<span>Bridge</span></div>
+      <div class="nav-logo">
+        <a href="./index.html" class="logo">
+          <img src="images/logo.png" alt="BloodBridge Logo" />
+        </a>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">☰</button>
 
-      <ul>
-        <li><a href="#">My Requests</a></li>
-        <li><a href="#">Find Donors</a></li>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#urgent-requests">Urgent Requests</a></li>
+        <li><a href="#stats">Our Impact</a></li>
         <li><a href="profile.html">Profile</a></li>
-        <li><a href="#">Logout</a></li>
       </ul>
-    </nav>
 
-   
+      <div class="nav-actions">
+        <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+        <a href="login_register.html" class="btn-login">Login</a>
+      </div>
+    </nav>
 
     <section class="hero">
       <div class="hero-text">
@@ -42,22 +49,23 @@
           the progress of your emergency needs.
         </p>
 
-        <button class="primary-btn">Create Blood Request</button>
+        <a href="create_request.html"
+          ><button class="primary-btn">Create Blood Request</button></a
+        >
       </div>
     </section>
-
 
     <section class="quick-actions">
       <h2>Quick Actions</h2>
 
-      <div class="action-container">
+      <a href="create_request.html"><div class="action-container">
         <div class="action-card">
           <i class="fa-solid fa-droplet"></i>
 
           <h3>Request Blood</h3>
 
           <p>Create a new emergency blood request.</p>
-        </div>
+        </div></a>
 
         <div class="action-card">
           <i class="fa-solid fa-user-group"></i>
@@ -76,7 +84,6 @@
         </div>
       </div>
     </section>
-
 
     <section class="requests">
       <h2>Your Active Request</h2>
@@ -128,8 +135,6 @@
       </div>
     </section>
 
-   
-
     <section class="matches">
       <h2>Matched Donors</h2>
 
@@ -164,8 +169,6 @@
       </div>
     </section>
 
-
-
     <section class="stats">
       <h2>Your Statistics</h2>
 
@@ -189,8 +192,6 @@
         </div>
       </div>
     </section>
-
-  
 
     <section class="activity">
       <h2>Recent Activity</h2>
