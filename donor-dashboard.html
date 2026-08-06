@@ -14,19 +14,27 @@
     />
   </head>
   <body>
-
-
     <nav class="navbar">
-      <div class="logo">Blood<span>Bridge</span></div>
+      <div class="nav-logo">
+        <a href="./index.html" class="logo">
+          <img src="images/logo.png" alt="BloodBridge Logo" />
+        </a>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">☰</button>
 
-      <ul>
-        <li><a href="#">Requests</a></li>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#urgent-requests">Urgent Requests</a></li>
+        <li><a href="#stats">Our Impact</a></li>
         <li><a href="profile.html">Profile</a></li>
-        <li><a href="#">Logout</a></li>
       </ul>
-    </nav>
 
-  
+      <div class="nav-actions">
+        <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+        <a href="login_register.html" class="btn-login">Login</a>
+      </div>
+    </nav>
 
     <section class="hero">
       <div class="hero-text">
@@ -40,11 +48,15 @@
           may need your help today.
         </p>
 
-        <button class="primary-btn">View Nearby Requests</button>
+        <button
+          button
+          onclick="location.href = '#active-requests'"
+          class="primary-btn"
+        >
+          View Nearby Requests
+        </button>
       </div>
     </section>
-
-
 
     <section class="quick-actions">
       <h2>Quick Actions</h2>
@@ -58,13 +70,15 @@
           <p>Respond to an emergency request.</p>
         </div>
 
-        <div class="action-card">
-          <i class="fa-solid fa-location-dot"></i>
+        <a href="#active-requests">
+          <div class="action-card">
+            <i class="fa-solid fa-location-dot"></i>
 
-          <h3>Nearby Requests</h3>
+            <h3>Nearby Requests</h3>
 
-          <p>See requests close to your location.</p>
-        </div>
+            <p>See requests close to your location.</p>
+          </div></a
+        >
 
         <div class="action-card">
           <i class="fa-solid fa-clock-rotate-left"></i>
@@ -76,9 +90,7 @@
       </div>
     </section>
 
-
-
-    <section class="requests">
+    <section class="requests" id="active-requests">
       <h2>Active Blood Requests</h2>
 
       <div class="request-card">
@@ -124,8 +136,6 @@
       </div>
     </section>
 
-  
-
     <section class="stats">
       <h2>Your Statistics</h2>
 
@@ -149,8 +159,6 @@
         </div>
       </div>
     </section>
-
-   
 
     <section class="activity">
       <h2>Recent Activity</h2>
