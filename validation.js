@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ==========================
   const loginForm = document.getElementById("loginForm");
 
-  loginForm.addEventListener("submit", function (e) {
+  loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     let isValid = true;
@@ -55,7 +55,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (isValid) {
-      alert("Login validation passed!");
+      try {
+        const session = await apiFetch("/auth/login", {
+          method: "POST",
+          body: JSON.stringify({ email: email.value.trim(), password: password.value }),
+        });
+        saveSession(session);
+        window.location.href = session.user.role === "donor" ? "donor-dashboard.html" : "patient-dashboard.html";
+      } catch (error) {
+        showError(password, "loginPasswordError", error.message);
+      }
     }
   });
 
@@ -64,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ==========================
   const registerForm = document.getElementById("registerForm");
 
-  registerForm.addEventListener("submit", function (e) {
+  registerForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     let isValid = true;
@@ -139,7 +148,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (isValid) {
-      alert("Registration validation passed!");
+      try {
+        const session = await apiFetch("/auth/register", {
+          method: "POST",
+          body: JSON.stringify({
+            fullName: fullName.value.trim(),
+            email: email.value.trim(),
+            bloodType: bloodType.value,
+            role: role.value,
+            password: password.value,
+          }),
+        });
+        saveSession(session);
+        window.location.href = session.user.role === "donor" ? "donor-dashboard.html" : "patient-dashboard.html";
+      } catch (error) {
+        showError(email, "registerEmailError", error.message);
+      }
     }
   });
 
