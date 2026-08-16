@@ -9,22 +9,16 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
   </head>
   <body>
     <nav class="navbar">
       <div class="nav-logo">
-        <a href="./index.html" class="logo">
-          <img src="images/logo.png" alt="BloodBridge Logo" />
-        </a>
+        <img src="images/logo.png" alt="BloodBridge Logo" />
       </div>
       <button class="menu-toggle" id="menu-toggle">☰</button>
 
       <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="map_dashboard.html">Dashboard</a></li>
         <li><a href="#how-it-works">How it Works</a></li>
         <li><a href="#urgent-requests">Urgent Requests</a></li>
         <li><a href="#stats">Our Impact</a></li>
@@ -39,122 +33,67 @@
 
     <header class="hero-section">
       <div class="hero-content">
-        <div class="hero-badge">❤️ Every Donation Can Save Up to 3 Lives</div>
-
-        <h1>
-          Connecting Donors,
-          <span class="highlight"> Saving Lives </span>
-        </h1>
-
+        <h1>Connecting Donors, <span class="highlight">Saving Lives</span></h1>
         <p>
-          BloodBridge connects blood donors with hospitals and patients in real
-          time, making emergency blood requests faster, easier, and more
-          accessible for everyone.
+          BloodBridge bridges the gap between patient emergency appeals and
+          real-time blood donors in your local radius. Every second counts.
         </p>
-
         <div class="hero-actions">
-          <a href="#urgent-requests" class="btn-primary">
-            Find Urgent Requests
-          </a>
-
-          <a href="login_register.html" class="btn-secondary">
-            Become a Donor
-          </a>
+          <a href="#urgent-requests"
+            ><button class="btn-primary">Find Urgent Requests</button></a
+          >
+          <a href="login_register.html"
+            ><button class="btn-secondary">Register as Donor</button></a
+          >
         </div>
       </div>
     </header>
 
     <section id="stats" class="stats-section">
-      <h2>Our Impact</h2>
-
-      <p class="stats-subtitle">
-        Every donation brings hope and helps save lives in our community.
-      </p>
-
+      <h2>Our Impact Matrix</h2>
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fa-solid fa-users"></i>
-          </div>
-
           <h3>1,250+</h3>
-
-          <p>Registered Donors</p>
+          <p>Donors</p>
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fa-solid fa-heart-pulse"></i>
-          </div>
-
-          <h3>780+</h3>
-
+          <h3>3,480</h3>
           <p>Lives Saved</p>
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fa-solid fa-hospital"></i>
-          </div>
-
           <h3>785</h3>
-
-          <p>Emergency Cases</p>
+          <p>Cases</p>
         </div>
       </div>
     </section>
 
     <section id="how-it-works" class="how-section">
       <h2>How BloodBridge Works</h2>
-
-      <p class="how-subtitle">
-        A simple, fast, and secure process that connects blood donors with
-        patients in need during emergencies.
-      </p>
-
       <div class="steps-grid">
         <div class="step-card">
-          <div class="step-number">01</div>
-
-          <div class="step-icon">
-            <i class="fa-solid fa-file-medical"></i>
-          </div>
-
-          <h3>Submit a Request</h3>
-
+          <div class="step-number">1</div>
+          <h3>Submit Request</h3>
           <p>
-            Hospitals or patients create an emergency blood request by selecting
-            the blood type, location, and urgency level.
+            Hospitals or patients submit an emergency blood request specifying
+            the location and urgency level.
           </p>
         </div>
-
         <div class="step-card">
-          <div class="step-number">02</div>
-
-          <div class="step-icon">
-            <i class="fa-solid fa-location-crosshairs"></i>
-          </div>
-
-          <h3>Smart Matching</h3>
-
+          <div class="step-number">2</div>
+          <h3>Radius Matching</h3>
           <p>
-            BloodBridge instantly finds nearby donors with the required blood
-            type and sends them real-time notifications.
+            Our smart system alerts all registered donors matching the required
+            blood type within a tight local radius.
           </p>
         </div>
-
         <div class="step-card">
-          <div class="step-number">03</div>
-
-          <div class="step-icon">
-            <i class="fa-solid fa-heart-circle-check"></i>
-          </div>
-
+          <div class="step-number">3</div>
           <h3>Save a Life</h3>
-
           <p>
-            The donor accepts the request, visits the medical center, and
-            completes the donation to help save someone's life.
+            Donors accept the request via notification, navigate to the
+            facility, and complete the urgent donation.
           </p>
         </div>
       </div>
@@ -162,98 +101,44 @@
 
     <section id="urgent-requests" class="requests-preview-section">
       <h2>Live Urgent Requests</h2>
-
       <p class="section-subtitle">
-        Active emergency blood requests from nearby hospitals.
+        Real-time emergency blood appeals matching your network
       </p>
 
       <div class="requests-container">
-        <div class="request-preview-card critical">
-          <div class="request-status critical-status">Critical</div>
-
+        <div class="request-preview-card border-critical">
+          <div class="badge badge-critical">CRITICAL</div>
           <div class="request-info">
-            <div class="blood-badge-large">O-</div>
-
-            <div class="request-details">
+            <span class="blood-badge-large">O-</span>
+            <div>
               <h3>Prishtina Regional Hospital</h3>
-
-              <p>
-                <i class="fa-solid fa-location-dot"></i>
-                2.4 km away
-              </p>
+              <p>📍 Distance: 2.4 km away</p>
             </div>
           </div>
-
-          <a href="login_register.html" class="respond-btn"> Respond </a>
+          <a href="login_register.html" class="action-link"
+            >Login to Respond →</a
+          >
         </div>
 
-        <div class="request-preview-card urgent">
-          <div class="request-status urgent-status">Urgent</div>
-
+        <div class="request-preview-card border-urgent">
+          <div class="badge badge-urgent">URGENT</div>
           <div class="request-info">
-            <div class="blood-badge-large">A+</div>
-
-            <div class="request-details">
+            <span class="blood-badge-large">A+</span>
+            <div>
               <h3>Main University Clinic (QKUK)</h3>
-
-              <p>
-                <i class="fa-solid fa-location-dot"></i>
-                4.1 km away
-              </p>
+              <p>📍 Distance: 4.1 km away</p>
             </div>
           </div>
-
-          <a href="login_register.html" class="respond-btn"> Respond </a>
+          <a href="auth.html" class="action-link">Login to Respond →</a>
         </div>
       </div>
     </section>
 
     <footer class="main-footer">
-      <div class="footer-container">
-        <div class="footer-brand">
-          <h3>BloodBridge</h3>
-
-          <p>
-            Connecting blood donors with patients and hospitals to save lives
-            through fast and reliable emergency support.
-          </p>
-        </div>
-
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-
-          <a href="index.html">Home</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#urgent-requests">Urgent Requests</a>
-          <a href="#stats">Our Impact</a>
-        </div>
-
-        <div class="footer-contact">
-          <h4>Contact</h4>
-
-          <p>
-            <i class="fa-solid fa-envelope"></i>
-            support@bloodbridge.com
-          </p>
-
-          <p>
-            <i class="fa-solid fa-phone"></i>
-            +383 44 123 456
-          </p>
-
-          <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-
-            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">© 2026 BloodBridge. All Rights Reserved.</div>
+      <p>
+        &copy; 2026 BloodBridge Platform. Built for Amazon Engagement University
+        Program.
+      </p>
     </footer>
     <script src="script.js"></script>
   </body>

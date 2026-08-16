@@ -10,6 +10,7 @@ body {
   background-color: #f1e6e6;
 }
 
+
 .split-container {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -129,7 +130,7 @@ textarea {
   font-family: inherit;
 }
 .btn-auth {
-  background-color: #1d3557;
+  background-color: #e63946;
   color: #ffffff;
   border: none;
   width: 100%;
@@ -139,35 +140,6 @@ textarea {
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
-}
-
-.btn-auth:hover {
-  background-color: #306384;
-}
-
-.btn-secondary {
-  background-color: #1d3557; 
-  color: #ffffff;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.btn-secondary:hover {
-  background-color: #306384;
-}
-
-.btn-secondary:active {
-  transform: scale(0.98);
 }
 
 
@@ -195,4 +167,3 @@ textarea {
 .request-info p { margin: 0; color: #6c757d; font-size: 13px; }
 
 .error-message { color: #e63946; font-size: 12px; margin-top: 2px; }
-
