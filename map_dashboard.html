@@ -10,27 +10,44 @@
       rel="stylesheet"
     />
 
+    <!-- Leaflet CSS & JS (OpenStreetMap) -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
   <body>
     <nav class="navbar">
-      <div class="nav-logo"><a href="index.html">BloodBridge</a></div>
-      <ul class="nav-links">
-        <li><a href="map_dashboard.html" class="active">Live Map</a></li>
-        <li><a href="create_request.html">New Request</a></li>
+      <div class="nav-logo">
+        <a href="./index.html" class="logo">
+          <img src="images/logo.png" alt="BloodBridge Logo" />
+        </a>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#urgent-requests">Urgent Requests</a></li>
+        <li><a href="#stats">Our Impact</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
-      <button class="nav-btn">Get started</button>
+
+      <div class="nav-actions">
+        <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+        <a href="login_register.html" class="btn-login">Login</a>
+      </div>
     </nav>
 
     <div class="full-map-wrapper">
       <div id="interactiveMap"></div>
     </div>
 
-    <script src="api.js"></script>
     <script src="map_dashboard.js"></script>
   </body>
 </html>
