@@ -178,6 +178,17 @@ body {
   background: #d73838;
 }
 
+/* Keep profile notification controls separate from the save action. */
+#profileForm > label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#profileForm .save-btn {
+  display: block;
+  margin: 24px 0 0 auto;
+}
+
 /* ==========================
    RANGE SLIDER
 ========================== */
