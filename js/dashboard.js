@@ -76,7 +76,7 @@ async function loadDonorDashboard() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!getAccessToken() || !getCurrentUser()) {
-    window.location.href = "login_register.html";
+    window.location.href = "../html/login_register.html";
     return;
   }
   document.getElementById("logoutButton").addEventListener("click", logout);

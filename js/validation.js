@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify({ email: email.value.trim(), password: password.value }),
         });
         saveSession(session);
-        window.location.href = session.user.role === "donor" ? "donor-dashboard.html" : "patient-dashboard.html";
+        window.location.href = session.user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
       } catch (error) {
         showError(password, "loginPasswordError", error.message);
       }
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }),
         });
         saveSession(session);
-        window.location.href = session.user.role === "donor" ? "donor-dashboard.html" : "patient-dashboard.html";
+        window.location.href = session.user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
       } catch (error) {
         showError(email, "registerEmailError", error.message);
       }

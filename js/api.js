@@ -27,7 +27,7 @@ async function logout() {
     await apiFetch("/auth/logout", { method: "POST" });
   } finally {
     clearSession();
-    window.location.href = "login_register.html";
+    window.location.href = "../html/login_register.html";
   }
 }
 

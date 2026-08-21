@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
           locationText
         )}&bloodType=${encodeURIComponent(selectedBloodType)}&units=${unitInput.value}`;
 
-        window.location.href = "confirmation.html" + queryParams;
+        window.location.href = "../html/confirmation.html" + queryParams;
       }
     });
   }

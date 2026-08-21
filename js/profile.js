@@ -18,7 +18,7 @@ async function loadProfile() {
   setText("profileTitle", user.fullName);
   setText("profileRole", user.role === "donor" ? "Active Blood Donor" : "Blood Requester");
   setText("bloodType", user.bloodType);
-  document.getElementById("dashboardLink").href = user.role === "donor" ? "donor-dashboard.html" : "patient-dashboard.html";
+  document.getElementById("dashboardLink").href = user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
   if (user.role !== "donor") return;
   const donor = await apiFetch("/profile/me/donor");
   document.getElementById("donorSettings").hidden = false;
@@ -28,7 +28,7 @@ async function loadProfile() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!getAccessToken() || !getCurrentUser()) return void (window.location.href = "login_register.html");
+  if (!getAccessToken() || !getCurrentUser()) return void (window.location.href = "../html/login_register.html");
   try { await loadProfile(); } catch (error) { showProfileMessage(error.message, true); }
   document.getElementById("profileForm").addEventListener("submit", async (event) => {
     event.preventDefault();
