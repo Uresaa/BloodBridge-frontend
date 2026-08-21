@@ -198,15 +198,15 @@ body {
 }
 
 .btn-login {
-  color: white;
+  color: #1d3557;
   padding: 11px 20px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .btn-login:hover {
-  background: white;
-  color: #1d3557;
+  background: #8a9fbd;
+  color: white;
 }
 
 .btn-outline {

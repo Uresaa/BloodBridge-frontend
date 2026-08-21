@@ -24,21 +24,27 @@
       <button class="menu-toggle" id="menu-toggle">☰</button>
 
       <ul class="nav-links" id="nav-links">
-         <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#how-it-works">How it Works</a></li>
-            <li><a href="index.html#urgent-requests">Urgent Requests</a></li>
-            <li><a href="index.html#stats">Our Impact</a></li>
-            <li><a href="#" id="dashboardLink">Dashboard</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li class="mobile-nav-actions">
-                <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
-                <button id="logoutButtonMobile" class="btn-login" type="button">Logout</button>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#how-it-works">How it Works</a></li>
+        <li><a href="index.html#urgent-requests">Urgent Requests</a></li>
+        <li><a href="index.html#stats">Our Impact</a></li>
+        <li><a href="#" id="dashboardLink">Dashboard</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li class="mobile-nav-actions">
+          <a href="create_request.html" class="btn-primary-nav"
+            >Request Blood</a
+          >
+          <button id="logoutButtonMobile" class="btn-login" type="button">
+            Logout
+          </button>
         </li>
       </ul>
 
       <div class="nav-actions">
         <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
-        <button id="logoutButton" class="btn-login" type="button">Logout</button>
+        <button id="logoutButton" class="btn-login" type="button">
+          Logout
+        </button>
       </div>
     </nav>
 
@@ -52,7 +58,10 @@
       </div>
     </section>
 
-    <p id="profileMessage" style="text-align: center; font-weight: 600; margin-top: 15px;"></p>
+    <p
+      id="profileMessage"
+      style="text-align: center; font-weight: 600; margin-top: 15px"
+    ></p>
 
     <section class="profile-content">
       <div class="left-column">
@@ -66,9 +75,18 @@
               <label for="email">Email</label>
               <div class="email-field">
                 <input id="email" type="email" disabled />
-                <button id="changeEmailButton" class="save-btn change-email-btn" type="button">Change email</button>
+                <button
+                  id="changeEmailButton"
+                  class="save-btn change-email-btn"
+                  type="button"
+                >
+                  Change email
+                </button>
               </div>
-              <p class="field-help">You will need to verify your new email address before it is changed.</p>
+              <p class="field-help">
+                You will need to verify your new email address before it is
+                changed.
+              </p>
             </div>
             <div class="input-group">
               <label>Phone</label><input id="phone" />
@@ -104,7 +122,9 @@
               min="5"
               max="50"
               value="15"
-            /><button type="submit" class="save-btn">Save donor settings</button>
+            /><button type="submit" class="save-btn">
+              Save donor settings
+            </button>
           </form>
           <button id="locationButton" class="save-btn" type="button">
             Update my location
@@ -113,12 +133,28 @@
       </div>
     </section>
 
-    <div id="changeEmailModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="changeEmailTitle" hidden>
+    <div
+      id="changeEmailModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="changeEmailTitle"
+      hidden
+    >
       <div class="modal-backdrop" data-close-email-modal></div>
       <div class="modal-dialog">
-        <button id="closeEmailModal" class="modal-close" type="button" aria-label="Close">&times;</button>
+        <button
+          id="closeEmailModal"
+          class="modal-close"
+          type="button"
+          aria-label="Close"
+        >
+          &times;
+        </button>
         <h2 id="changeEmailTitle">Change email</h2>
-        <p id="changeEmailDescription">Enter your new email address. We will send a verification code to it.</p>
+        <p id="changeEmailDescription">
+          Enter your new email address. We will send a verification code to it.
+        </p>
         <form id="requestEmailChangeForm">
           <label for="newEmail">New email address</label>
           <input id="newEmail" type="email" autocomplete="email" required />
@@ -126,7 +162,12 @@
         </form>
         <form id="confirmEmailChangeForm" hidden>
           <label for="emailVerificationCode">Verification code</label>
-          <input id="emailVerificationCode" inputmode="numeric" autocomplete="one-time-code" required />
+          <input
+            id="emailVerificationCode"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            required
+          />
           <button class="save-btn" type="submit">Confirm new email</button>
         </form>
         <p id="emailChangeMessage" class="modal-message" aria-live="polite"></p>
