@@ -22,7 +22,7 @@ body {
   position: sticky;
   top: 15px;
   width: calc(100% - 40px);
-  margin: 15px auto;
+  margin: 15px auto 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +44,12 @@ body {
   z-index: 1000;
 
   transition: all 0.35s ease;
+}
+
+/* Keep the shared navigation typography consistent on pages with a local font. */
+.navbar,
+.navbar * {
+  font-family: "Inter", sans-serif;
 }
 
 .navbar:hover {
@@ -76,7 +82,7 @@ body {
 }
 
 .nav-logo img:hover {
-  transform: scale(1.06) rotate(-2deg);
+  transform: scale(1.55) rotate(-2deg);
 }
 
 .nav-links {
@@ -180,169 +186,98 @@ body {
 
 .btn-primary-nav {
   color: white;
-
   padding: 12px 24px;
-
   border-radius: 50px;
-
   background: linear-gradient(135deg, #ff5a65, #e63946);
-
   box-shadow: 0 12px 24px rgba(230, 57, 70, 0.35);
 }
 
 .btn-primary-nav:hover {
   transform: translateY(-3px);
-
   box-shadow: 0 18px 35px rgba(230, 57, 70, 0.45);
 }
 
 .btn-login {
   color: white;
-
   padding: 11px 20px;
-
   border-radius: 50px;
-
   border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .btn-login:hover {
   background: white;
-
   color: #1d3557;
 }
 
 .btn-outline {
   border: 2px solid rgba(255, 255, 255, 0.5);
-
   color: white;
-
   padding: 11px 20px;
-
   border-radius: 50px;
 }
 
 .btn-outline:hover {
   background: white;
-
   color: #1d3557;
 }
 
 .hero-section {
   min-height: 92vh;
-
   display: flex;
-
   align-items: center;
-
   padding: 100px 50px;
-
   background-image: url(../images/blood-donation.png);
-
   background-size: cover;
-
-  background-position: center;
-
+  background-position: center top;
   background-repeat: no-repeat;
 }
-/* .hero-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  background: radial-gradient(
-    circle at top right,
-    rgba(230, 57, 70, 0.25),
-    transparent 35%
-  );
-} */
 .hero-content {
   max-width: 640px;
 }
 .hero-badge {
   display: inline-flex;
-
   align-items: center;
-
   gap: 8px;
-
   padding: 12px 22px;
-
   border-radius: 40px;
-
   background: rgba(255, 255, 255, 0.75);
-
   backdrop-filter: blur(10px);
-
   font-weight: 600;
-
   color: #d62839;
-
   margin-bottom: 30px;
-
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 .hero-content h1 {
   font-size: 72px;
-
   font-weight: 800;
-
   line-height: 1.1;
-
   margin-bottom: 25px;
-
   color: #12284a;
 }
-
-/* .highlight{
-
-color:#e63946;
-
-}
-.highlight {
-  color: #ff5964;
-} */
-
 .hero-content p {
   font-size: 21px;
-
   line-height: 1.8;
-
   color: #4d5b70;
-
   margin-bottom: 45px;
 }
 .hero-actions {
   display: flex;
-
   gap: 18px;
-
   margin-bottom: 55px;
 }
 
 .btn-primary {
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   text-decoration: none;
-
   width: 230px;
-
   height: 58px;
-
   border-radius: 50px;
-
   background: #e63946;
-
   color: white;
-
   font-weight: 700;
-
   box-shadow: 0 15px 35px rgba(230, 57, 70, 0.35);
-
   transition: 0.3s;
 }
 
@@ -352,53 +287,33 @@ color:#e63946;
 
 .btn-secondary {
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   text-decoration: none;
-
   width: 220px;
-
   height: 58px;
-
   border-radius: 50px;
-
   border: 2px solid #1d3557;
-
   color: #1d3557;
-
   font-weight: 700;
-
   transition: 0.3s;
 }
 
 .btn-secondary:hover {
   background: #1d3557;
-
   color: white;
 }
 
 .hero-card {
   display: flex;
-
   align-items: center;
-
   gap: 15px;
-
   background: rgba(255, 255, 255, 0.85);
-
   backdrop-filter: blur(10px);
-
   padding: 18px 20px;
-
   border-radius: 18px;
-
   min-width: 210px;
-
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-
   transition: 0.3s;
 }
 
@@ -408,258 +323,175 @@ color:#e63946;
 .icon-circle {
   width: 55px;
   height: 55px;
-
   min-width: 55px;
   min-height: 55px;
-
   border-radius: 50%;
-
   background: #e63946;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   color: white;
   font-size: 24px;
-
   flex-shrink: 0;
 }
 .hero-card h3 {
   margin: 0;
-
   font-size: 32px;
-
   color: #1d3557;
 }
 
 .hero-card span {
   color: #6b7280;
-
   font-size: 15px;
 }
 .stats-section {
   padding: 100px 40px;
 
   text-align: center;
-
   background: linear-gradient(180deg, #f8fbff, #eef5ff);
 }
 
 .stats-section h2 {
   font-size: 42px;
-
   color: #1d3557;
-
   margin-bottom: 12px;
-
   font-weight: 800;
 }
 
 .stats-subtitle {
   max-width: 650px;
-
   margin: 0 auto 60px;
-
   color: #6b7280;
-
   font-size: 18px;
-
   line-height: 1.7;
 }
 
 .stats-grid {
   display: flex;
-
   justify-content: center;
-
   gap: 30px;
-
   flex-wrap: wrap;
 }
 
 .stat-card {
   width: 280px;
-
   background: white;
-
   border-radius: 22px;
-
   padding: 40px 30px;
-
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-
   transition: 0.35s;
-
   border: 1px solid rgba(230, 57, 70, 0.08);
 }
 
 .stat-card:hover {
   transform: translateY(-10px);
-
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12);
 }
 
 .stat-icon {
   width: 75px;
-
   height: 75px;
-
   margin: 0 auto 25px;
-
   border-radius: 50%;
-
   background: linear-gradient(135deg, #ff5d6c, #e63946);
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   color: white;
-
   font-size: 30px;
-
   box-shadow: 0 12px 30px rgba(230, 57, 70, 0.3);
 }
 
 .stat-card h3 {
   margin: 0;
-
   font-size: 42px;
-
   color: #1d3557;
-
   font-weight: 800;
 }
 
 .stat-card p {
   margin-top: 12px;
-
   color: #6b7280;
-
   font-size: 17px;
-
   font-weight: 600;
 }
 .how-section {
   padding: 110px 40px;
-
   background: #ffffff;
-
   text-align: center;
 }
 
 .how-section h2 {
   font-size: 42px;
-
   font-weight: 800;
-
   color: #1d3557;
-
   margin-bottom: 15px;
 }
 
 .how-subtitle {
   max-width: 700px;
-
   margin: 0 auto 70px;
-
   color: #6b7280;
-
   font-size: 18px;
-
   line-height: 1.7;
 }
 
 .steps-grid {
   display: flex;
-
   justify-content: center;
-
   gap: 35px;
-
   flex-wrap: wrap;
 }
 
 .step-card {
   position: relative;
-
   width: 340px;
-
   padding: 80px 30px 40px;
-
   border-radius: 24px;
-
   background: white;
-
   border: 1px solid rgba(230, 57, 70, 0.08);
-
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-
   transition: 0.35s;
 }
 
 .step-card:hover {
   transform: translateY(-10px);
-
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.14);
 }
 
 .step-number {
   position: absolute;
-
   top: 25px;
-
   left: 25px;
-
   font-size: 50px;
-
   font-weight: 800;
-
   color: rgba(230, 57, 70, 0.12);
 }
 
 .step-icon {
   width: 90px;
-
   height: 90px;
-
   margin: 0 auto 30px;
-
   border-radius: 50%;
-
   background: linear-gradient(135deg, #ff5d6c, #e63946);
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   color: white;
-
   font-size: 34px;
-
   box-shadow: 0 15px 30px rgba(230, 57, 70, 0.3);
 }
 
 .step-card h3 {
   color: #1d3557;
-
   font-size: 24px;
-
   margin-bottom: 18px;
 }
 
 .step-card p {
   color: #6b7280;
-
   font-size: 16px;
-
   line-height: 1.8;
-
   margin: 0;
 }
 .steps-grid {
@@ -668,19 +500,12 @@ color:#e63946;
 
 .step-card:not(:last-child)::after {
   content: "";
-
   position: absolute;
-
   top: 95px;
-
   right: -35px;
-
   width: 35px;
-
   height: 3px;
-
   background: #e63946;
-
   opacity: 0.25;
 }
 
@@ -691,58 +516,39 @@ color:#e63946;
 }
 .requests-preview-section {
   padding: 110px 40px;
-
   background: linear-gradient(180deg, #f8fbff, #eef5ff);
-
   text-align: center;
 }
 
 .requests-preview-section h2 {
   font-size: 42px;
-
   color: #1d3557;
-
   margin-bottom: 15px;
-
   font-weight: 800;
 }
 
 .section-subtitle {
   color: #6b7280;
-
   font-size: 18px;
-
   margin-bottom: 60px;
 }
 
 .requests-container {
   display: flex;
-
   flex-direction: column;
-
   gap: 28px;
-
   max-width: 950px;
-
   margin: auto;
 }
 .request-preview-card {
   position: relative;
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   padding: 28px 35px;
-
   background: white;
-
   border-radius: 22px;
-
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-
   transition: 0.35s;
 }
 
@@ -751,102 +557,70 @@ color:#e63946;
 }
 .request-status {
   position: absolute;
-
   top: 22px;
-
   right: 25px;
-
   padding: 8px 16px;
-
   border-radius: 30px;
-
   font-size: 13px;
-
   font-weight: 700;
 }
 
 .critical-status {
   background: #ffe4e6;
-
   color: #e63946;
 }
 
 .urgent-status {
   background: #fff4dc;
-
   color: #f4a000;
 }
 .blood-badge-large {
   width: 70px;
-
   height: 70px;
-
   border-radius: 50%;
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   background: linear-gradient(135deg, #ff5b68, #e63946);
-
   color: white;
-
   font-size: 24px;
-
   font-weight: 800;
-
   box-shadow: 0 10px 25px rgba(230, 57, 70, 0.35);
 }
 .request-info {
   display: flex;
-
   align-items: center;
-
   gap: 22px;
 }
 
 .request-details h3 {
   margin: 0;
-
   color: #1d3557;
-
   font-size: 22px;
 }
 
 .request-details p {
   margin-top: 8px;
-
   color: #6b7280;
-
   font-size: 16px;
 }
 
 .request-details i {
   color: #e63946;
-
   margin-right: 6px;
 }
 .respond-btn {
   text-decoration: none;
-
   padding: 14px 28px;
-
   border-radius: 40px;
-
   background: #e63946;
-
   color: white;
-
   font-weight: 700;
-
   transition: 0.3s;
 }
 
 .respond-btn:hover {
   background: #c71f2d;
-
   transform: translateY(-3px);
 }
 .critical {
@@ -858,153 +632,113 @@ color:#e63946;
 }
 .main-footer {
   background: #1d3557;
-
   color: #dbe4ef;
-
   padding: 70px 60px 25px;
 }
 
 .footer-container {
   max-width: 1200px;
-
   margin: auto;
-
   display: flex;
-
   justify-content: space-between;
-
   gap: 70px;
-
   flex-wrap: wrap;
 }
 
 .footer-brand {
   flex: 1;
-
   min-width: 280px;
 }
 
 .footer-brand img {
   width: 80px;
-
   margin-bottom: 15px;
 }
 
 .footer-brand h3 {
   color: white;
-
   font-size: 28px;
-
   margin-bottom: 15px;
 }
 
 .footer-brand p {
   color: #b8c5d6;
-
   line-height: 1.8;
 }
 
 .footer-links {
   flex: 1;
-
   min-width: 180px;
 }
 
 .footer-links h4 {
   color: white;
-
   margin-bottom: 20px;
 }
 
 .footer-links a {
   display: block;
-
   color: #b8c5d6;
-
   text-decoration: none;
-
   margin-bottom: 12px;
-
   transition: 0.3s;
 }
 
 .footer-links a:hover {
   color: #ff5964;
-
   padding-left: 6px;
 }
 
 .footer-contact {
   flex: 1;
-
   min-width: 220px;
 }
 
 .footer-contact h4 {
   color: white;
-
   margin-bottom: 20px;
 }
 
 .footer-contact p {
   color: #b8c5d6;
-
   margin-bottom: 15px;
 }
 
 .footer-contact i {
   color: #ff5964;
-
   margin-right: 8px;
 }
 
 .social-icons {
   display: flex;
-
   gap: 15px;
-
   margin-top: 20px;
 }
 
 .social-icons a {
   width: 45px;
-
   height: 45px;
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   border-radius: 50%;
-
   background: rgba(255, 255, 255, 0.08);
-
   color: white;
-
   text-decoration: none;
-
   transition: 0.3s;
 }
 
 .social-icons a:hover {
   background: #e63946;
-
   transform: translateY(-4px);
 }
 
 .footer-bottom {
   margin-top: 50px;
-
   padding-top: 20px;
-
   text-align: center;
-
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-
   color: #9fb2c8;
-
   font-size: 15px;
 }
 
@@ -1181,6 +915,9 @@ color:#e63946;
 ========================== */
 
 @media (max-width: 768px) {
+  .nav-logo img:hover {
+    transform: scale(1.55) rotate(-2deg);
+  }
   .navbar {
     position: relative;
     flex-wrap: wrap;
@@ -1348,7 +1085,6 @@ color:#e63946;
   }
 }
 
-/* Shared header and footer: responsive layout for all pages. */
 .navbar {
   max-width: 1440px;
   min-height: 76px;
@@ -1363,6 +1099,7 @@ color:#e63946;
 .nav-logo img {
   width: clamp(115px, 12vw, 160px) !important;
   height: clamp(58px, 7vw, 82px) !important;
+  transform: scale(1.45);
 }
 
 .nav-links {
@@ -1397,7 +1134,10 @@ color:#e63946;
 
 .footer-container {
   display: grid;
-  grid-template-columns: minmax(240px, 1.4fr) minmax(160px, 0.8fr) minmax(210px, 1fr);
+  grid-template-columns: minmax(240px, 1.4fr) minmax(160px, 0.8fr) minmax(
+      210px,
+      1fr
+    );
   gap: clamp(32px, 5vw, 70px);
 }
 
@@ -1489,14 +1229,19 @@ color:#e63946;
   .navbar {
     width: calc(100% - 24px);
     min-height: 64px;
-    margin: 12px auto;
+    margin: 12px auto 0;
     padding: 6px 12px;
     gap: 4px;
   }
 
   .nav-logo img {
-    width: 108px !important;
-    height: 54px !important;
+    width: 130px !important;
+    height: 70px !important;
+    transform: none;
+  }
+
+  .nav-logo img:hover {
+    transform: scale(1.24) rotate(-1deg);
   }
 
   .menu-toggle {
@@ -1546,4 +1291,17 @@ color:#e63946;
   .mobile-nav-actions {
     flex-wrap: wrap;
   }
+}
+
+/* On the home page, let the hero photo begin at the very top behind the navbar. */
+body:has(.hero-section) .navbar {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+body:has(.hero-section) .hero-content {
+  transform: translateY(60px);
 }

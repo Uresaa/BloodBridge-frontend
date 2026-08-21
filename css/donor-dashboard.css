@@ -17,50 +17,6 @@ body{
 }
 
 /* ===========================
-   NAVBAR
-=========================== */
-
-.navbar{
-    width:100%;
-    height:80px;
-    background:#1f3558;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 8%;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.logo{
-    color:white;
-    font-size:28px;
-    font-weight:700;
-}
-
-.logo span{
-    color:#ef4444;
-}
-
-.navbar ul{
-    display:flex;
-    gap:35px;
-    list-style:none;
-}
-
-.navbar a{
-    text-decoration:none;
-    color:white;
-    font-weight:500;
-    transition:.3s;
-}
-
-.navbar a:hover{
-    color:#ef4444;
-}
-
-/* ===========================
    HERO
 =========================== */
 
@@ -330,18 +286,6 @@ footer{
     text-align:left;
 }
 
-.navbar{
-    flex-direction:column;
-    height:auto;
-    padding:20px;
-}
-
-.navbar ul{
-    margin-top:15px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
 .hero h1{
     font-size:36px;
 }
@@ -378,13 +322,6 @@ section{
     font-size:20px;
 }
 
-.navbar ul{
-    width:100%;
-    gap:8px;
-}
-
-.navbar a,
-.navbar button,
 .request-card{
     overflow-wrap:anywhere;
 }

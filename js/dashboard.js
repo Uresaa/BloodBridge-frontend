@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
   document.getElementById("logoutButton").addEventListener("click", logout);
+  document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
   try {
     if (document.body.dataset.role === "patient") await loadPatientDashboard();
     else await loadDonorDashboard();
