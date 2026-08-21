@@ -13,7 +13,11 @@ body {
   color: #333333;
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #ffffff 0%, #fff7f7 50%, #f9ecec 100%);
+  background:
+    radial-gradient(circle at 0% 28%, rgba(238, 202, 211, 0.7) 0%, rgba(238, 202, 211, 0) 34%),
+    radial-gradient(circle at 100% 52%, rgba(216, 226, 245, 0.72) 0%, rgba(216, 226, 245, 0) 38%),
+    linear-gradient(135deg, #f7e9ed 0%, #ffffff 45%, #edf3ff 100%);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -53,12 +57,13 @@ body {
 .nav-logo img {
   width: clamp(115px, 12vw, 160px) !important;
   height: clamp(58px, 7vw, 82px) !important;
+  transform: scale(1.45);
   object-fit: contain;
   transition: 0.4s ease;
 }
 
 .nav-logo img:hover {
-  transform: scale(1.06) rotate(-2deg);
+  transform: scale(1.55) rotate(-2deg);
 }
 
 .nav-links {
@@ -250,6 +255,99 @@ body {
   background: #f1f5f9;
   color: #94a3b8;
   cursor: not-allowed;
+}
+
+.email-field {
+  display: flex;
+  gap: 10px;
+}
+
+.email-field input {
+  min-width: 0;
+}
+
+.change-email-btn {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.field-help {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.modal-dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 30px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.25);
+}
+
+.modal-dialog h2 {
+  margin: 0 0 10px;
+  color: #1d3557;
+}
+
+.modal-dialog > p:not(.modal-message) {
+  margin: 0 0 20px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.modal-dialog label {
+  display: block;
+  margin-bottom: 8px;
+  color: #1d3557;
+  font-weight: 600;
+}
+
+.modal-dialog input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.modal-message {
+  min-height: 20px;
+  margin: 14px 0 0;
+  font-weight: 600;
 }
 
 .save-btn {
@@ -476,6 +574,16 @@ input[type="range"] {
     padding: 6px 12px;
   }
 
+  .nav-logo img {
+    width: 130px !important;
+    height: 70px !important;
+    transform: none;
+  }
+
+  .nav-logo img:hover {
+    transform: scale(1.24) rotate(-1deg);
+  }
+
   .main-footer {
     padding: 48px 24px 22px;
   }
@@ -487,5 +595,13 @@ input[type="range"] {
 
   .footer-brand {
     grid-column: auto;
+  }
+
+  .email-field {
+    flex-direction: column;
+  }
+
+  .change-email-btn {
+    min-height: 42px;
   }
 }

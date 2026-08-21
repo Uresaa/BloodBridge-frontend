@@ -21,6 +21,21 @@ function markButtonAsSaved(buttonElement, originalText) {
   }, 3000);
 }
 
+function showEmailChangeMessage(message, isError = false) {
+  const target = document.getElementById("emailChangeMessage");
+  target.textContent = message;
+  target.style.color = isError ? "#b42318" : "#087443";
+}
+
+function closeEmailChangeModal() {
+  document.getElementById("changeEmailModal").hidden = true;
+  document.getElementById("requestEmailChangeForm").reset();
+  document.getElementById("confirmEmailChangeForm").reset();
+  document.getElementById("requestEmailChangeForm").hidden = false;
+  document.getElementById("confirmEmailChangeForm").hidden = true;
+  showEmailChangeMessage("");
+}
+
 function trackFormChanges() {
   if (isTrackingSet) return;
 
@@ -119,6 +134,66 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("logoutButton")?.addEventListener("click", logout);
   document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
+
+  const changeEmailModal = document.getElementById("changeEmailModal");
+  const requestEmailChangeForm = document.getElementById("requestEmailChangeForm");
+  const confirmEmailChangeForm = document.getElementById("confirmEmailChangeForm");
+  let requestedEmail = "";
+
+  document.getElementById("changeEmailButton")?.addEventListener("click", () => {
+    changeEmailModal.hidden = false;
+    document.getElementById("newEmail").focus();
+  });
+
+  document.getElementById("closeEmailModal")?.addEventListener("click", closeEmailChangeModal);
+  document.querySelector("[data-close-email-modal]")?.addEventListener("click", closeEmailChangeModal);
+
+  requestEmailChangeForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    requestedEmail = document.getElementById("newEmail").value.trim();
+    const submitButton = requestEmailChangeForm.querySelector("button");
+    submitButton.disabled = true;
+    showEmailChangeMessage("");
+
+    try {
+      await apiFetch("/profile/email-change/request", {
+        method: "POST",
+        body: JSON.stringify({ email: requestedEmail })
+      });
+      requestEmailChangeForm.hidden = true;
+      confirmEmailChangeForm.hidden = false;
+      document.getElementById("emailVerificationCode").focus();
+      showEmailChangeMessage("A verification code was sent to your new email address.");
+    } catch (error) {
+      showEmailChangeMessage(error.message, true);
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+
+  confirmEmailChangeForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submitButton = confirmEmailChangeForm.querySelector("button");
+    submitButton.disabled = true;
+    showEmailChangeMessage("");
+
+    try {
+      await apiFetch("/profile/email-change/confirm", {
+        method: "POST",
+        body: JSON.stringify({
+          email: requestedEmail,
+          code: document.getElementById("emailVerificationCode").value.trim()
+        })
+      });
+      document.getElementById("email").value = requestedEmail;
+      showProfileMessage("Your email address was updated.");
+      closeEmailChangeModal();
+    } catch (error) {
+      showEmailChangeMessage(error.message, true);
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
 
   const donorForm = document.getElementById("donorForm");
   if (donorForm) {

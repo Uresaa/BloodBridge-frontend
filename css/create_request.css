@@ -6,7 +6,11 @@ body {
   color: #1d3557;
 }
 .bg-light {
-  background-color: #f1e6e6;
+  background:
+    radial-gradient(circle at 0% 28%, rgba(238, 202, 211, 0.7) 0%, rgba(238, 202, 211, 0) 34%),
+    radial-gradient(circle at 100% 52%, rgba(216, 226, 245, 0.72) 0%, rgba(216, 226, 245, 0) 38%),
+    linear-gradient(135deg, #f7e9ed 0%, #ffffff 45%, #edf3ff 100%);
+  background-attachment: fixed;
 }
 
 .split-container {

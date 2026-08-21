@@ -24,21 +24,21 @@
       <button class="menu-toggle" id="menu-toggle">☰</button>
 
       <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#how-it-works">How it Works</a></li>
-        <li><a href="index.html#urgent-requests">Urgent Requests</a></li>
-        <li><a href="index.html#stats">Our Impact</a></li>
-        <li><a id="dashboardLink" href="#">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li class="mobile-nav-actions">
-          <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
-          <button id="logoutButtonMobile" class="btn-login">Logout</button>
+         <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#how-it-works">How it Works</a></li>
+            <li><a href="index.html#urgent-requests">Urgent Requests</a></li>
+            <li><a href="index.html#stats">Our Impact</a></li>
+            <li><a href="#" id="dashboardLink">Dashboard</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li class="mobile-nav-actions">
+                <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+                <button id="logoutButtonMobile" class="btn-login" type="button">Logout</button>
         </li>
       </ul>
 
       <div class="nav-actions">
         <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
-        <button id="logoutButton" class="btn-login">Logout</button>
+        <button id="logoutButton" class="btn-login" type="button">Logout</button>
       </div>
     </nav>
 
@@ -63,7 +63,12 @@
               <label>Full name</label><input id="fullName" required />
             </div>
             <div class="input-group">
-              <label>Email</label><input id="email" type="email" disabled />
+              <label for="email">Email</label>
+              <div class="email-field">
+                <input id="email" type="email" disabled />
+                <button id="changeEmailButton" class="save-btn change-email-btn" type="button">Change email</button>
+              </div>
+              <p class="field-help">You will need to verify your new email address before it is changed.</p>
             </div>
             <div class="input-group">
               <label>Phone</label><input id="phone" />
@@ -108,6 +113,26 @@
       </div>
     </section>
 
+    <div id="changeEmailModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="changeEmailTitle" hidden>
+      <div class="modal-backdrop" data-close-email-modal></div>
+      <div class="modal-dialog">
+        <button id="closeEmailModal" class="modal-close" type="button" aria-label="Close">&times;</button>
+        <h2 id="changeEmailTitle">Change email</h2>
+        <p id="changeEmailDescription">Enter your new email address. We will send a verification code to it.</p>
+        <form id="requestEmailChangeForm">
+          <label for="newEmail">New email address</label>
+          <input id="newEmail" type="email" autocomplete="email" required />
+          <button class="save-btn" type="submit">Send verification code</button>
+        </form>
+        <form id="confirmEmailChangeForm" hidden>
+          <label for="emailVerificationCode">Verification code</label>
+          <input id="emailVerificationCode" inputmode="numeric" autocomplete="one-time-code" required />
+          <button class="save-btn" type="submit">Confirm new email</button>
+        </form>
+        <p id="emailChangeMessage" class="modal-message" aria-live="polite"></p>
+      </div>
+    </div>
+
     <footer class="main-footer">
       <div class="footer-container">
         <div class="footer-brand">
@@ -121,9 +146,9 @@
         <div class="footer-links">
           <h4>Quick Links</h4>
           <a href="index.html">Home</a>
-          <a href="index.html#how-it-works">How It Works</a>
-          <a href="index.html#urgent-requests">Urgent Requests</a>
-          <a href="index.html#stats">Our Impact</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#urgent-requests">Urgent Requests</a>
+          <a href="#stats">Our Impact</a>
         </div>
 
         <div class="footer-contact">
@@ -148,6 +173,7 @@
       <div class="footer-bottom">© 2026 BloodBridge. All Rights Reserved.</div>
     </footer>
 
+    <script src="../js/script.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/profile.js"></script>
   </body>
