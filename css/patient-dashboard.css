@@ -670,5 +670,17 @@ section{
 
 }
 
+.navbar ul{
+    width:100%;
+    gap:8px;
+}
+
+.navbar a,
+.navbar button,
+.request-card,
+.match-card{
+    overflow-wrap:anywhere;
+}
+
 
 }

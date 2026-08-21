@@ -12,11 +12,11 @@
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            height: 100vh; 
+            min-height: 100svh;
             margin: 0; 
             padding: 20px;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .card { 
@@ -128,6 +128,36 @@
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.5); }
             to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                align-items: flex-start;
+                padding: 16px;
+            }
+
+            .card {
+                padding: 34px 22px;
+                border-radius: 20px;
+            }
+
+            .success-icon-wrapper {
+                width: 66px;
+                height: 66px;
+                margin-bottom: 22px;
+            }
+
+            h1 { font-size: 25px; }
+            p { font-size: 15px; margin-bottom: 22px; }
+
+            .coords-badge {
+                max-width: 100%;
+                overflow-wrap: anywhere;
+                padding: 8px 12px;
+                margin-bottom: 24px;
+            }
+
+            .btn { padding: 14px 20px; }
         }
     </style>
 </head>

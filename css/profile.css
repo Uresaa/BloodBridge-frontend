@@ -340,4 +340,20 @@ footer {
   .save-btn {
     width: 100%;
   }
+
+  .navbar ul {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .navbar a,
+  .navbar button {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-card,
+  .card {
+    overflow-wrap: anywhere;
+  }
 }

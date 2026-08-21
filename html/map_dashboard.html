@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BloodBridge - Live Map Monitor</title>
     <link rel="stylesheet" href="../css/map_dashboard.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -36,10 +37,15 @@
   <li><a href="index.html#urgent-requests">Urgent Requests</a></li>
   <li><a href="index.html#stats">Our Impact</a></li>
   <li><a href="profile.html">Profile</a></li>
+  <li class="mobile-nav-actions">
+    <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+    <a href="login_register.html" class="btn-login">Login</a>
+  </li>
 </ul>
 
       <div class="nav-actions">
         <a href="create_request.html" class="btn-primary-nav">Request Blood</a>
+        <a href="login_register.html" class="btn-login">Login</a>
       </div>
     </nav>
 
@@ -47,6 +53,7 @@
       <div id="interactiveMap"></div>
     </div>
 
+    <script src="../js/script.js"></script>
     <script src="../js/map_dashboard.js"></script>
   </body>
 </html>
