@@ -1,3 +1,6 @@
+let isFormChanged = false;
+let isTrackingSet = false;
+
 function setText(id, value) {
   document.getElementById(id).textContent = value ?? "—";
 }
@@ -7,6 +10,35 @@ function showProfileMessage(message, isError = false) {
   target.textContent = message;
   target.style.color = isError ? "#b42318" : "#087443";
 }
+
+function markButtonAsSaved(buttonElement, originalText) {
+  buttonElement.classList.add("saved");
+  buttonElement.textContent = "Saved";
+
+  setTimeout(() => {
+    buttonElement.classList.remove("saved");
+    buttonElement.textContent = originalText;
+  }, 3000);
+}
+
+function trackFormChanges() {
+  if (isTrackingSet) return;
+
+  const inputs = document.querySelectorAll("#profileForm input, #donorForm input");
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => { isFormChanged = true; });
+    input.addEventListener("change", () => { isFormChanged = true; });
+  });
+
+  isTrackingSet = true;
+}
+
+window.addEventListener("beforeunload", (event) => {
+  if (isFormChanged) {
+    event.preventDefault();
+    event.returnValue = "Unsaved changes";
+  }
+});
 
 async function loadProfile() {
   const user = await apiFetch("/profile/me");
@@ -28,17 +60,19 @@ async function loadProfile() {
     dashboardLink.href = user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
   }
 
-  if (user.role !== "donor") return;
+  if (user.role === "donor") {
+    const donor = await apiFetch("/profile/me/donor");
+    document.getElementById("donorSettings").hidden = false;
+    document.getElementById("notificationRadius").value = donor.notificationRadiusKm;
+    document.getElementById("radiusLabel").textContent = `${donor.notificationRadiusKm} km`;
+    document.getElementById("isAvailable").checked = Boolean(donor.isAvailable);
+  }
 
-  const donor = await apiFetch("/profile/me/donor");
-  document.getElementById("donorSettings").hidden = false;
-  document.getElementById("notificationRadius").value = donor.notificationRadiusKm;
-  document.getElementById("radiusLabel").textContent = `${donor.notificationRadiusKm} km`;
-  document.getElementById("isAvailable").checked = Boolean(donor.isAvailable);
+  trackFormChanges();
+  isFormChanged = false;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
- 
   if (!getAccessToken() || !getCurrentUser()) {
     window.location.href = "../html/login_register.html";
     return;
@@ -58,8 +92,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     showProfileMessage(error.message, true);
   }
 
-  document.getElementById("profileForm").addEventListener("submit", async (event) => {
+  const profileForm = document.getElementById("profileForm");
+  profileForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const saveBtn = profileForm.querySelector(".save-btn");
     try {
       await apiFetch("/profile/me", {
         method: "PATCH",
@@ -73,6 +109,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
       });
       showProfileMessage("Profile saved.");
+      isFormChanged = false;
+      markButtonAsSaved(saveBtn, "Save profile");
       await loadProfile();
     } catch (error) {
       showProfileMessage(error.message, true);
@@ -82,29 +120,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("logoutButton")?.addEventListener("click", logout);
   document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
 
-
   const donorForm = document.getElementById("donorForm");
-  if (!donorForm) return;
+  if (donorForm) {
+    document.getElementById("notificationRadius").addEventListener("input", () => {
+      document.getElementById("radiusLabel").textContent = `${document.getElementById("notificationRadius").value} km`;
+    });
 
-  document.getElementById("notificationRadius").addEventListener("input", () => {
-    document.getElementById("radiusLabel").textContent = `${document.getElementById("notificationRadius").value} km`;
-  });
-
-  donorForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    try {
-      await apiFetch("/profile/me/donor", {
-        method: "PATCH",
-        body: JSON.stringify({
-          notificationRadiusKm: Number(document.getElementById("notificationRadius").value),
-          isAvailable: document.getElementById("isAvailable").checked
-        })
-      });
-      showProfileMessage("Donor settings saved.");
-    } catch (error) {
-      showProfileMessage(error.message, true);
-    }
-  });
+    donorForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const saveBtn = donorForm.querySelector(".save-btn");
+      try {
+        await apiFetch("/profile/me/donor", {
+          method: "PATCH",
+          body: JSON.stringify({
+            notificationRadiusKm: Number(document.getElementById("notificationRadius").value),
+            isAvailable: document.getElementById("isAvailable").checked
+          })
+        });
+        showProfileMessage("Donor settings saved.");
+        isFormChanged = false;
+        markButtonAsSaved(saveBtn, "Save donor settings");
+      } catch (error) {
+        showProfileMessage(error.message, true);
+      }
+    });
+  }
 
   document.getElementById("locationButton")?.addEventListener("click", () => {
     navigator.geolocation?.getCurrentPosition(
