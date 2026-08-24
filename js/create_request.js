@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+  if (!getAccessToken() || !getCurrentUser()) {
+    window.location.href = "../html/login_register.html";
+    return;
+  }
+
   let selectedBloodType = "";
   let userLat = null;
   let userLng = null;
@@ -226,12 +231,33 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
-        const urgencyVal = activeRadio.value;
-        const queryParams = `?lat=${finalLat}&lng=${finalLng}&urgency=${urgencyVal}&location=${encodeURIComponent(
-          locationText
-        )}&bloodType=${encodeURIComponent(selectedBloodType)}&units=${unitInput.value}`;
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting request…";
 
-        window.location.href = "../html/confirmation.html" + queryParams;
+        try {
+          const request = await apiFetch("/blood-requests", {
+            method: "POST",
+            body: JSON.stringify({
+              bloodType: selectedBloodType,
+              unitsNeeded: Number(unitInput.value),
+              urgency: activeRadio.value.toLowerCase(),
+              hospitalName: locationText,
+              latitude: finalLat,
+              longitude: finalLng,
+              notes: document.getElementById("additionalDetails")?.value.trim() || "",
+            }),
+          });
+          const queryParams = `?lat=${finalLat}&lng=${finalLng}&urgency=${activeRadio.value}&location=${encodeURIComponent(
+            locationText
+          )}&bloodType=${encodeURIComponent(selectedBloodType)}&units=${unitInput.value}&requestId=${encodeURIComponent(request.id)}`;
+          window.location.href = "../html/confirmation.html" + queryParams;
+        } catch (error) {
+          if (locationError) locationError.innerText = error.message || "Unable to create the blood request.";
+          submitButton.disabled = false;
+          submitButton.textContent = originalButtonText;
+        }
       }
     });
   }
