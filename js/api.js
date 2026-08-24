@@ -1,4 +1,4 @@
-const API_URL = window.BLOODBRIDGE_API_URL || "http://localhost:5002/api";
+const API_URL = window.BLOODBRIDGE_API_URL || "http://18.184.13.232:5002/api";
 
 function getAccessToken() {
   return localStorage.getItem("bloodbridge.accessToken");
