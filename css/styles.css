@@ -198,7 +198,8 @@ body {
 }
 
 .btn-login {
-  color: #1d3557;
+  color: white;
+  background: transparent;
   padding: 11px 20px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.22);

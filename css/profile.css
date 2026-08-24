@@ -160,6 +160,12 @@ body {
   color: #1d3557;
 }
 
+#logoutButton:hover,
+#logoutButtonMobile:hover {
+  background: #8a9fbd;
+  color: white;
+}
+
 .menu-toggle {
   display: none;
 }
