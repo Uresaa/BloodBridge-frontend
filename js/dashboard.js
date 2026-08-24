@@ -39,7 +39,8 @@ async function loadResponses(requestId) {
   const responses = await apiFetch(`/blood-requests/${requestId}/responses`);
   const target = document.getElementById("responses");
   target.hidden = false;
-  target.innerHTML = `<h2>Donor responses</h2>${responses.length ? responses.map((response) => `<div class="activity-card"><div><h3>${response.donor ? escapeHtml(response.donor.fullName) : "Donor"} — ${escapeHtml(response.status)}</h3><p>${response.donor?.phone ? `Phone: ${escapeHtml(response.donor.phone)}` : "Contact details become visible once accepted."}</p>${response.status === "interested" ? `<button data-response-id="${response.id}" class="accept-button">Accept donor</button>` : ""}${response.status === "accepted" ? `<button data-response-id="${response.id}" class="complete-button">Confirm donation</button>` : ""}</div></div>`).join("") : "<p>No donor has responded yet.</p>"}`;
+  target.innerHTML = `<h2>Donor responses</h2>${responses.length ? responses.map((response) => `<div class="activity-card"><div><h3>${response.donor ? escapeHtml(response.donor.fullName) : "Donor"} — ${escapeHtml(response.status)}</h3><p>${response.donor?.phone ? `Phone: ${escapeHtml(response.donor.phone)}` : "Contact details become visible once accepted."}</p>${response.status === "interested" ? `<button data-response-id="${response.id}" class="accept-button">Accept donor</button>` : ""}${response.status === "accepted" ? `<button data-response-id="${response.id}" class="complete-button">Confirm donation</button>` : ""}</div></div>`).join("") : "<p>No donor has accepted this offer yet.</p>"}`;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
   target.querySelectorAll(".accept-button").forEach((button) => button.addEventListener("click", async () => {
     try {
       await apiFetch(`/blood-requests/${requestId}/responses/${button.dataset.responseId}`, { method: "PATCH", body: JSON.stringify({ status: "accepted" }) });
