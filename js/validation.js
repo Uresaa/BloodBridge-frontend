@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const showRegister = document.getElementById("showRegister");
   const showLogin = document.getElementById("showLogin");
 
+  // Switch between Login and Register
   showRegister.addEventListener("click", function (e) {
     e.preventDefault();
     loginCard.classList.add("hidden");
@@ -20,8 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Regular Expressions
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
   // LOGIN VALIDATION
   const loginForm = document.getElementById("loginForm");
@@ -54,21 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (isValid) {
       try {
-        const accessToken = await cognitoLogin(email.value, password.value);
-        localStorage.setItem("bloodbridge.accessToken", accessToken);
-        let user;
-        try {
-          user = await apiFetch("/profile/me");
-        } catch (error) {
-          if (error.statusCode !== 403) throw error;
-          localStorage.setItem("bloodbridge.cognitoProfilePending", "true");
-          loginCard.classList.add("hidden");
-          registerCard.classList.remove("hidden");
-          document.querySelector("#registerCard h2").textContent = "Complete Your BloodBridge Profile";
-          document.querySelector("#registerCard > p").textContent = "Your Cognito login is verified. Add your profile details once to finish connecting it.";
-          return;
-        }
-        const session = { accessToken, user };
+        const session = await apiFetch("/auth/login", {
+          method: "POST",
+          body: JSON.stringify({ email: email.value.trim(), password: password.value }),
+        });
         saveSession(session);
         window.location.href = session.user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
       } catch (error) {
@@ -77,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+
   // REGISTER VALIDATION
   const registerForm = document.getElementById("registerForm");
 
@@ -84,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     let isValid = true;
-    const cognitoProfilePending = localStorage.getItem("bloodbridge.cognitoProfilePending") === "true";
     resetErrors();
 
     const fullName = document.getElementById("fullName");
@@ -93,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const role = document.getElementById("role");
     const password = document.getElementById("registerPassword");
     const confirmPassword = document.getElementById("confirmPassword");
-   
+
     if (fullName.value.trim().length < 2) {
       showError(fullName, "fullNameError", "Please enter your full name.");
       isValid = false;
@@ -121,63 +110,49 @@ document.addEventListener("DOMContentLoaded", function () {
       isValid = false;
     }
 
-    if (!cognitoProfilePending) {
-      if (password.value.trim() === "") {
-        showError(password, "registerPasswordError", "Password is required.");
-        isValid = false;
-      } else if (!passwordRegex.test(password.value)) {
-        showError(
-          password,
-          "registerPasswordError",
-          "Password must contain at least 8 characters, one uppercase letter and one number.",
-        );
-        isValid = false;
-      }
+    if (password.value.trim() === "") {
+      showError(password, "registerPasswordError", "Password is required.");
+      isValid = false;
+    } else if (!passwordRegex.test(password.value)) {
+      showError(
+        password,
+        "registerPasswordError",
+          "Password must have at least 8 characters, an uppercase letter, a number, and a symbol (for example !).",
+      );
+      isValid = false;
+    }
 
-      if (confirmPassword.value.trim() === "") {
-        showError(
-          confirmPassword,
-          "confirmPasswordError",
-          "Please confirm your password.",
-        );
-        isValid = false;
-      } else if (password.value !== confirmPassword.value) {
-        showError(
-          confirmPassword,
-          "confirmPasswordError",
-          "Passwords do not match.",
-        );
-        isValid = false;
-      }
+    // Confirm Password
+    if (confirmPassword.value.trim() === "") {
+      showError(
+        confirmPassword,
+        "confirmPasswordError",
+        "Please confirm your password.",
+      );
+      isValid = false;
+    } else if (password.value !== confirmPassword.value) {
+      showError(
+        confirmPassword,
+        "confirmPasswordError",
+        "Passwords do not match.",
+      );
+      isValid = false;
     }
 
     if (isValid) {
       try {
-        if (cognitoProfilePending) {
-          const user = await apiFetch("/auth/cognito/sync", {
-            method: "POST",
-            body: JSON.stringify({ fullName: fullName.value.trim(), bloodType: bloodType.value, email: email.value.trim() }),
-          });
-          const accessToken = localStorage.getItem("bloodbridge.accessToken");
-          localStorage.removeItem("bloodbridge.cognitoProfilePending");
-          saveSession({ accessToken, user: user.user });
-          window.location.href = user.user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
-          return;
-        }
-
-        const registration = await apiFetch("/auth/cognito/register", {
+        const session = await apiFetch("/auth/register", {
           method: "POST",
           body: JSON.stringify({
-            fullName: fullName.value.trim(), email: email.value.trim(), bloodType: bloodType.value,
-            role: role.value, password: password.value,
+            fullName: fullName.value.trim(),
+            email: email.value.trim(),
+            bloodType: bloodType.value,
+            role: role.value,
+            password: password.value,
           }),
         });
-        const confirmationCode = window.prompt("Cognito sent a confirmation code to your email. Enter that code:");
-        if (!confirmationCode) throw new Error("Enter the Cognito confirmation code to finish registration.");
-        await cognitoConfirmSignUp(email.value, confirmationCode);
-        window.alert(registration.message || "Account confirmed. You can now log in.");
-        registerCard.classList.add("hidden");
-        loginCard.classList.remove("hidden");
+        saveSession(session);
+        window.location.href = session.user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
       } catch (error) {
         showError(email, "registerEmailError", error.message);
       }
@@ -185,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
-  // Helper Functions 
+  // Helper Functions
   function showError(inputElement, errorSpanId, message) {
     inputElement.classList.add("input-error");
     document.getElementById(errorSpanId).innerText = message;
