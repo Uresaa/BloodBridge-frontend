@@ -202,26 +202,51 @@ section h2 {
 
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 25px;
+  align-items: stretch;
 }
 
 .stat-card {
   background: white;
   border-radius: 18px;
   text-align: center;
-  padding: 40px;
+  padding: 28px 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .stat-card h1 {
   color: #ef4444;
-  font-size: 50px;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  width: 100%;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.15;
+}
+
+#availability {
+  font-size: 2rem;
+  white-space: nowrap;
 }
 
 .stat-card p {
   color: #666;
+  margin: 0;
 }
 
 /* ===========================
