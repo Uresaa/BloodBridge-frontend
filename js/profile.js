@@ -81,6 +81,7 @@ async function loadProfile() {
     document.getElementById("notificationRadius").value = donor.notificationRadiusKm;
     document.getElementById("radiusLabel").textContent = `${donor.notificationRadiusKm} km`;
     document.getElementById("isAvailable").checked = Boolean(donor.isAvailable);
+    await syncDonorLocationAutomatically(user, donor);
   }
 
   trackFormChanges();
@@ -127,6 +128,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       isFormChanged = false;
       markButtonAsSaved(saveBtn, "Save profile");
       await loadProfile();
+      if (document.getElementById("shareLocation").checked && getCurrentUser()?.role === "donor") {
+        const donor = await apiFetch("/profile/me/donor");
+        await syncDonorLocationAutomatically({ shareLocationAutomatically: true }, donor);
+      }
     } catch (error) {
       showProfileMessage(error.message, true);
     }

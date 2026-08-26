@@ -74,14 +74,15 @@ async function loadResponses(requestId) {
   }));
 }
 
-async function loadDonorDashboard() {
-  const [user, profile, response] = await Promise.all([
-    apiFetch("/profile/me"), apiFetch("/profile/me/donor"), apiFetch("/donor-offers/me"),
+async function loadDonorDashboard({ syncLocation = false } = {}) {
+  const [user, profile] = await Promise.all([
+    apiFetch("/profile/me"), apiFetch("/profile/me/donor"),
   ]);
+  if (syncLocation) await syncDonorLocationAutomatically(user, profile);
+  const offers = await apiFetch("/donor-offers/me");
   document.getElementById("welcomeName").textContent = user.fullName;
   document.getElementById("availability").textContent = profile.isAvailable ? "Available" : "Unavailable";
   document.getElementById("radius").textContent = `${profile.notificationRadiusKm} km`;
-  const offers = response;
   document.getElementById("requestList").innerHTML = offers.length
     ? offers.map(donorOfferCard).join("")
     : "<p>No active matching offers right now.</p>";
@@ -109,6 +110,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
   try {
     if (document.body.dataset.role === "patient") await loadPatientDashboard();
-    else await loadDonorDashboard();
+    else {
+      await loadDonorDashboard({ syncLocation: true });
+      window.setInterval(() => {
+        loadDonorDashboard().catch(showError);
+      }, 15000);
+    }
   } catch (error) { showError(error); }
 });

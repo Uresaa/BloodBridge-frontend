@@ -62,6 +62,38 @@ async function apiFetch(path, options = {}) {
   return payload;
 }
 
+function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("Geolocation is not supported by your browser."));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: false,
+      timeout: 12000,
+      maximumAge: 60000,
+    });
+  });
+}
+
+async function syncDonorLocationAutomatically(user, donorProfile) {
+  const hasLocation = donorProfile?.latitude != null && donorProfile?.longitude != null;
+  if (!user?.shareLocationAutomatically && hasLocation) return donorProfile;
+
+  try {
+    const position = await getCurrentPosition();
+    return await apiFetch("/profile/me/donor", {
+      method: "PATCH",
+      body: JSON.stringify({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      }),
+    });
+  } catch {
+    return donorProfile;
+  }
+}
+
 async function cognitoRequest(action, payload) {
   const response = await fetch(COGNITO_ENDPOINT, {
     method: "POST",
