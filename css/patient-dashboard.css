@@ -593,17 +593,3 @@ section{
 
 }
 
-.map-button {
-  display: inline-block;
-  margin: 15px 8px 0 0;
-  padding: 12px 18px;
-  border: 1px solid #1f3558;
-  border-radius: 8px;
-  color: #1f3558;
-  font-weight: 600;
-  text-decoration: none;
-}
-.map-button:hover {
-  background: #1f3558;
-  color: white;
-}

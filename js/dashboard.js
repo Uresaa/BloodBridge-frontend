@@ -7,29 +7,14 @@ function formatDate(value) {
 }
 
 function requestCard(request, action = "") {
-  const mapLink = buildMapLink(request);
-  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>${escapeHtml(request.hospitalName || "Blood request")}</h3><p>${Number(request.unitsNeeded)} unit(s) · ${formatDate(request.createdAt)}</p></div></div><div class="right"><span class="${escapeHtml(request.urgency)}">${escapeHtml(request.urgency)}</span><a class="map-button" href="${mapLink}">View on map</a>${action}</div></article>`;
+  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>${escapeHtml(request.hospitalName || "Blood request")}</h3><p>${Number(request.unitsNeeded)} unit(s) · ${formatDate(request.createdAt)}</p></div></div><div class="right"><span class="${escapeHtml(request.urgency)}">${escapeHtml(request.urgency)}</span>${action}</div></article>`;
 }
 
 function donorOfferCard(offer) {
   const request = offer.request;
-  const mapLink = buildMapLink(request);
-  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>Expires ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><a class="map-button" href="${mapLink}">View on map</a><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">I'm interested</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Decline</button></div></article>`;
+  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>Expires ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">I'm interested</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Decline</button></div></article>`;
 }
 
-function buildMapLink(request) {
-  const params = new URLSearchParams({
-    location: request.hospitalName || "Reporting location",
-    urgency: request.urgency || "normal",
-    bloodType: request.bloodType || "",
-    units: String(request.unitsNeeded || 1),
-  });
-
-  if (Number.isFinite(Number(request.latitude))) params.set("lat", request.latitude);
-  if (Number.isFinite(Number(request.longitude))) params.set("lng", request.longitude);
-
-  return `map_dashboard.html?${params.toString()}`;
-}
 function showError(error) {
   const element = document.getElementById("pageMessage");
   element.textContent = error.message || "Unable to load data.";
