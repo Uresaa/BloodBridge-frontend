@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const role = document.getElementById("role");
     const password = document.getElementById("registerPassword");
     const confirmPassword = document.getElementById("confirmPassword");
+    const acceptedTerms = document.getElementById("acceptedTerms");
 
     if (fullName.value.trim().length < 2) {
       showError(fullName, "fullNameError", "Please enter your full name.");
@@ -139,6 +140,15 @@ document.addEventListener("DOMContentLoaded", function () {
       isValid = false;
     }
 
+    if (!acceptedTerms.checked) {
+      showError(
+        acceptedTerms,
+        "acceptedTermsError",
+        "You must accept the Terms and Conditions to create an account.",
+      );
+      isValid = false;
+    }
+
     if (isValid) {
       try {
         const session = await apiFetch("/auth/register", {
@@ -149,6 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
             bloodType: bloodType.value,
             role: role.value,
             password: password.value,
+            acceptedTerms: true,
           }),
         });
         saveSession(session);
