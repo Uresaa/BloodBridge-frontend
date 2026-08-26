@@ -26,27 +26,19 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 0px 35px;
-
   background: rgba(29, 53, 87, 0.93);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-
   border-radius: 20px;
-
   border: 1px solid rgba(255, 255, 255, 0.12);
-
   box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.18),
     inset 0 1px rgba(255, 255, 255, 0.08);
-
   z-index: 1000;
-
   transition: all 0.35s ease;
 }
 
-/* Keep the shared navigation typography consistent on pages with a local font. */
 .navbar,
 .navbar * {
   font-family: "Inter", sans-serif;
@@ -95,51 +87,32 @@ body {
 
 .nav-links a {
   position: relative;
-
   text-decoration: none;
-
   color: #ffffff;
-
   font-weight: 600;
-
   font-size: 15px;
-
   letter-spacing: 0.3px;
-
   padding: 12px 18px;
-
   border-radius: 12px;
-
   transition: 0.35s;
 }
 
 .nav-links a:hover {
   background: rgba(255, 255, 255, 0.08);
-
   color: #fff;
-
   transform: translateY(-2px);
 }
 
 .nav-links a::after {
   content: "";
-
   position: absolute;
-
   left: 50%;
-
   bottom: 6px;
-
   transform: translateX(-50%);
-
   width: 0;
-
   height: 3px;
-
   border-radius: 50px;
-
   background: #e63946;
-
   transition: 0.35s;
 }
 
@@ -227,40 +200,52 @@ body {
   display: flex;
   align-items: center;
   padding: 100px 50px;
-  background-image: url(../images/blood-donation.png);
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    url(../images/blood-donation.png);
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
 }
+
 .hero-content {
   max-width: 640px;
 }
+
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 22px;
   border-radius: 40px;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   font-weight: 600;
   color: #d62839;
   margin-bottom: 30px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
+
 .hero-content h1 {
-  font-size: 72px;
+  font-size: 55px;
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 25px;
   color: #12284a;
 }
+
 .hero-content p {
   font-size: 21px;
   line-height: 1.8;
   color: #4d5b70;
   margin-bottom: 45px;
 }
+
 .hero-actions {
   display: flex;
   gap: 18px;
@@ -321,6 +306,7 @@ body {
 .hero-card:hover {
   transform: translateY(-5px);
 }
+
 .icon-circle {
   width: 55px;
   height: 55px;
@@ -335,6 +321,7 @@ body {
   font-size: 24px;
   flex-shrink: 0;
 }
+
 .hero-card h3 {
   margin: 0;
   font-size: 32px;
@@ -345,9 +332,9 @@ body {
   color: #6b7280;
   font-size: 15px;
 }
+
 .stats-section {
   padding: 100px 40px;
-
   text-align: center;
   background: linear-gradient(180deg, #f8fbff, #eef5ff);
 }
@@ -416,6 +403,7 @@ body {
   font-size: 17px;
   font-weight: 600;
 }
+
 .how-section {
   padding: 110px 40px;
   background: #ffffff;
@@ -495,6 +483,7 @@ body {
   line-height: 1.8;
   margin: 0;
 }
+
 .steps-grid {
   position: relative;
 }
@@ -508,12 +497,6 @@ body {
   height: 3px;
   background: #e63946;
   opacity: 0.25;
-}
-
-@media (max-width: 1100px) {
-  .step-card:not(:last-child)::after {
-    display: none;
-  }
 }
 .requests-preview-section {
   padding: 110px 40px;
@@ -541,6 +524,7 @@ body {
   max-width: 950px;
   margin: auto;
 }
+
 .request-preview-card {
   position: relative;
   display: flex;
@@ -556,6 +540,7 @@ body {
 .request-preview-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
+
 .request-status {
   position: absolute;
   top: 22px;
@@ -575,6 +560,7 @@ body {
   background: #fff4dc;
   color: #f4a000;
 }
+
 .blood-badge-large {
   width: 70px;
   height: 70px;
@@ -588,6 +574,7 @@ body {
   font-weight: 800;
   box-shadow: 0 10px 25px rgba(230, 57, 70, 0.35);
 }
+
 .request-info {
   display: flex;
   align-items: center;
@@ -610,6 +597,7 @@ body {
   color: #e63946;
   margin-right: 6px;
 }
+
 .respond-btn {
   text-decoration: none;
   padding: 14px 28px;
@@ -624,6 +612,7 @@ body {
   background: #c71f2d;
   transform: translateY(-3px);
 }
+
 .critical {
   border-left: 6px solid #e63946;
 }
@@ -631,6 +620,7 @@ body {
 .urgent {
   border-left: 6px solid #f4a000;
 }
+
 .main-footer {
   background: #1d3557;
   color: #dbe4ef;
@@ -745,8 +735,16 @@ body {
 
 .auth-page {
   background:
-    radial-gradient(circle at 0% 28%, rgba(238, 202, 211, 0.7) 0%, rgba(238, 202, 211, 0) 34%),
-    radial-gradient(circle at 100% 52%, rgba(216, 226, 245, 0.72) 0%, rgba(216, 226, 245, 0) 38%),
+    radial-gradient(
+      circle at 0% 28%,
+      rgba(238, 202, 211, 0.7) 0%,
+      rgba(238, 202, 211, 0) 34%
+    ),
+    radial-gradient(
+      circle at 100% 52%,
+      rgba(216, 226, 245, 0.72) 0%,
+      rgba(216, 226, 245, 0) 38%
+    ),
     linear-gradient(135deg, #f7e9ed 0%, #ffffff 45%, #edf3ff 100%);
   background-attachment: fixed;
   display: flex;
@@ -873,10 +871,6 @@ body {
   text-decoration: underline;
 }
 
-/* ==========================
-   TABLET (1024px)
-========================== */
-
 @media (max-width: 1024px) {
   .navbar {
     padding: 18px 30px;
@@ -915,79 +909,180 @@ body {
   }
 }
 
-/* ==========================
-   MOBILE (768px)
-========================== */
-
 @media (max-width: 768px) {
-  .nav-logo img:hover {
-    transform: scale(1.55) rotate(-2deg);
-  }
-  .navbar {
-    position: relative;
-    flex-wrap: wrap;
-  }
-
-  .menu-toggle {
-    display: block;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 32px;
-    cursor: pointer;
-  }
-
-  .nav-links {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    background: #1d3557;
-    margin-top: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .nav-links li {
-    width: 100%;
-  }
-
-  .nav-links a {
-    display: block;
-    padding: 16px;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .nav-actions {
-    display: none;
-  }
-
   .hero-section {
-    padding: 80px 20px 60px;
+    padding: 110px 20px 60px;
+    min-height: auto;
+
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.97) 0%,
+        rgba(255, 255, 255, 0.95) 25%,
+        rgba(255, 255, 255, 0.90) 50%,
+        rgba(255, 255, 255, 0.78) 75%,
+        rgba(255, 255, 255, 0.60) 100%
+      ),
+      url(../images/blood-donation.png);
+
+    background-size: cover;
+    background-position: 70% center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    transform: translateY(20px);
+  }
+
+  .hero-badge {
+    font-size: 14px;
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
   }
 
   .hero-content h1 {
-    font-size: 36px;
-    line-height: 1.2;
+    font-size: 32px;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: #0f1e36;
   }
 
   .hero-content p {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #263f61;
+    margin-bottom: 32px;
+
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   .hero-actions {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
     width: 100%;
   }
 
   .btn-primary,
   .btn-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 100%;
-    max-width: 320px;
+    max-width: 540px;
+    height: 58px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    border-radius: 50px;
+    box-sizing: border-box;
+  }
+
+
+  .hero-section {
+    padding: 110px 20px 60px;
+    min-height: auto;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.94) 0%,
+        rgba(255, 255, 255, 0.82) 35%,
+        rgba(255, 255, 255, 0.72) 65%,
+        rgba(255, 255, 255, 0.55) 100%
+      ),
+      url(../images/blood-donation.png);
+
+    background-size: cover;
+    background-position: 70% center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-badge {
+    font-size: 14px;
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: #0f1e36;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #334155;
+    margin-bottom: 32px;
+
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+
+    max-width: 100%;
+  }
+
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    max-width: 540px;
+    height: 58px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    border-radius: 50px;
+    box-sizing: border-box;
+  }
+
+  .btn-primary {
+    background: #e63946;
+    color: white;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid #1d3557;
+    color: #1d3557;
   }
 
   .stats-section,
@@ -1029,64 +1124,6 @@ body {
 
   .auth-container {
     padding: 30px 22px;
-  }
-}
-
-/* ==========================
-   SMALL PHONES (480px)
-========================== */
-
-@media (max-width: 480px) {
-  .nav-logo {
-    font-size: 22px;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-content h1 {
-    font-size: 30px;
-  }
-
-  .hero-content p {
-    font-size: 15px;
-  }
-
-  .stats-section h2,
-  .how-section h2,
-  .requests-preview-section h2 {
-    font-size: 24px;
-  }
-
-  .stat-card h3 {
-    font-size: 30px;
-  }
-
-  .blood-badge-large {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-  }
-
-  .request-info h3 {
-    font-size: 16px;
-  }
-
-  .request-info p {
-    font-size: 13px;
-  }
-
-  .btn-primary,
-  .btn-secondary,
-  .btn-auth {
-    font-size: 15px;
-  }
-
-  .auth-container {
-    padding: 24px 18px;
   }
 }
 
@@ -1139,10 +1176,10 @@ body {
 
 .footer-container {
   display: grid;
-  grid-template-columns: minmax(240px, 1.4fr) minmax(160px, 0.8fr) minmax(
-      210px,
-      1fr
-    );
+  grid-template-columns:
+    minmax(240px, 1.4fr)
+    minmax(160px, 0.8fr)
+    minmax(210px, 1fr);
   gap: clamp(32px, 5vw, 70px);
 }
 
@@ -1157,10 +1194,17 @@ body {
   overflow-wrap: anywhere;
 }
 
+
 @media (max-width: 1100px) {
   .navbar {
     position: sticky;
     top: 10px;
+  }
+
+  .nav-logo img {
+    width: 170px !important;
+    height: 90px !important;
+    transform: scale(1.25);
   }
 
   .menu-toggle {
@@ -1230,6 +1274,7 @@ body {
   }
 }
 
+
 @media (max-width: 640px) {
   .navbar {
     width: calc(100% - 24px);
@@ -1240,9 +1285,9 @@ body {
   }
 
   .nav-logo img {
-    width: 130px !important;
-    height: 70px !important;
-    transform: none;
+    width: 155px !important;
+    height: 82px !important;
+    transform: scale(1.15);
   }
 
   .nav-logo img:hover {
@@ -1287,10 +1332,82 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .nav-logo {
+    font-size: 22px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    gap: 14px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    max-width: 100%;
+    height: 54px;
+    font-size: 15px;
+    padding: 0 15px;
+  }
+
+  .stats-section h2,
+  .how-section h2,
+  .requests-preview-section h2 {
+    font-size: 24px;
+  }
+
+  .stat-card h3 {
+    font-size: 30px;
+  }
+
+  .blood-badge-large {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .request-info h3 {
+    font-size: 16px;
+  }
+
+  .request-info p {
+    font-size: 13px;
+  }
+
+  .btn-auth {
+    font-size: 15px;
+  }
+
+  .auth-container {
+    padding: 24px 18px;
+  }
+}
+
 @media (max-width: 420px) {
   .navbar {
     display: grid;
     grid-template-columns: 1fr auto;
+  }
+
+  .nav-logo img {
+    width: 150px !important;
+    height: 80px !important;
+    transform: scale(1.1);
   }
 
   .mobile-nav-actions {
@@ -1298,7 +1415,7 @@ body {
   }
 }
 
-/* On the home page, let the hero photo begin at the very top behind the navbar. */
+
 body:has(.hero-section) .navbar {
   position: absolute;
   top: 15px;
@@ -1309,4 +1426,10 @@ body:has(.hero-section) .navbar {
 
 body:has(.hero-section) .hero-content {
   transform: translateY(60px);
+}
+
+@media (max-width: 768px) {
+  body:has(.hero-section) .hero-content {
+    transform: translateY(20px);
+  }
 }
