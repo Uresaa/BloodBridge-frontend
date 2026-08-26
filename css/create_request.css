@@ -75,7 +75,7 @@ body {
 .urgency-card {
   display: flex;
   flex-direction: column;
-  padding: 14px;
+  padding: 14px 44px 14px 14px;
   border-radius: 8px;
   border-left: 5px solid #ced4da;
   background: #fdfdfd;
@@ -85,6 +85,8 @@ body {
 }
 .urgency-card input[type="radio"] {
   position: absolute;
+  width: 18px;
+  height: 18px;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
