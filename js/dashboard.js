@@ -86,6 +86,37 @@ async function loadDonorDashboard({ syncLocation = false } = {}) {
   }));
 }
 
+async function loadAllRequestsForDonor() {
+  const panel = document.getElementById("allRequestList");
+  if (!panel) return;
+  try {
+    const response = await apiFetch("/blood-requests?limit=50");
+    const requests = response.items || response;
+    panel.innerHTML = requests.length
+      ? requests.map((request) => requestCard(request)).join("")
+      : "<p>No blood requests right now.</p>";
+  } catch (error) {
+    panel.innerHTML = `<p>Unable to load all requests: ${escapeHtml(error.message)}</p>`;
+  }
+}
+
+function setupRequestTabs() {
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const panels = {
+    matching: document.getElementById("matchingRequestsPanel"),
+    all: document.getElementById("allRequestsPanel"),
+  };
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      button.classList.add("active");
+      Object.entries(panels).forEach(([key, panel]) => {
+        if (panel) panel.hidden = key !== button.dataset.tab;
+      });
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   if (!getAccessToken() || !getCurrentUser()) {
     window.location.href = "../html/login_register.html";
@@ -96,9 +127,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     if (document.body.dataset.role === "patient") await loadPatientDashboard();
     else {
-      await loadDonorDashboard({ syncLocation: true });
+      setupRequestTabs();
+      await Promise.all([
+        loadDonorDashboard({ syncLocation: true }),
+        loadAllRequestsForDonor(),
+      ]);
       window.setInterval(() => {
         loadDonorDashboard().catch(showError);
+        loadAllRequestsForDonor();
       }, 15000);
     }
   } catch (error) { showError(error); }

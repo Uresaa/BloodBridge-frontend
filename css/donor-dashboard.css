@@ -119,6 +119,40 @@ section h2 {
    REQUESTS
 =========================== */
 
+.request-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.tab-btn {
+  background: white;
+  color: #1f3558;
+  border: 1px solid #e2e8f0;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s;
+}
+
+.tab-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.tab-btn.active {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
 .request-card {
   background: white;
   border-radius: 18px;

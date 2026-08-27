@@ -38,8 +38,17 @@
     </section>
     <p id="pageMessage" hidden></p>
     <section class="requests">
-      <h2>Your matching offers</h2>
-      <div id="requestList"></div>
+      <h2>Blood Requests</h2>
+      <div class="request-tabs">
+        <button type="button" class="tab-btn active" data-tab="matching">My Blood Type</button>
+        <button type="button" class="tab-btn" data-tab="all">All Requests</button>
+      </div>
+      <div id="matchingRequestsPanel" class="tab-panel">
+        <div id="requestList"></div>
+      </div>
+      <div id="allRequestsPanel" class="tab-panel" hidden>
+        <div id="allRequestList"></div>
+      </div>
     </section>
     <section class="stats">
       <h2>Your donor settings</h2>
