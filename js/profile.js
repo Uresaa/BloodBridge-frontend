@@ -39,10 +39,16 @@ function closeEmailChangeModal() {
 function trackFormChanges() {
   if (isTrackingSet) return;
 
-  const inputs = document.querySelectorAll("#profileForm input, #donorForm input");
+  const inputs = document.querySelectorAll(
+    "#profileForm input, #donorForm input",
+  );
   inputs.forEach((input) => {
-    input.addEventListener("input", () => { isFormChanged = true; });
-    input.addEventListener("change", () => { isFormChanged = true; });
+    input.addEventListener("input", () => {
+      isFormChanged = true;
+    });
+    input.addEventListener("change", () => {
+      isFormChanged = true;
+    });
   });
 
   isTrackingSet = true;
@@ -62,24 +68,38 @@ async function loadProfile() {
   document.getElementById("phone").value = user.phone || "";
   document.getElementById("city").value = user.city || "";
   document.getElementById("email").value = user.email || "";
-  document.getElementById("emailNotifications").checked = Boolean(user.emailNotifications);
-  document.getElementById("smsNotifications").checked = Boolean(user.smsNotifications);
-  document.getElementById("shareLocation").checked = Boolean(user.shareLocationAutomatically);
+  document.getElementById("emailNotifications").checked = Boolean(
+    user.emailNotifications,
+  );
+  document.getElementById("smsNotifications").checked = Boolean(
+    user.smsNotifications,
+  );
+  document.getElementById("shareLocation").checked = Boolean(
+    user.shareLocationAutomatically,
+  );
 
   setText("profileTitle", user.fullName);
-  setText("profileRole", user.role === "donor" ? "Active Blood Donor" : "Blood Requester");
+  setText(
+    "profileRole",
+    user.role === "donor" ? "Active Blood Donor" : "Blood Requester",
+  );
   setText("bloodType", user.bloodType);
 
   const dashboardLink = document.getElementById("dashboardLink");
   if (dashboardLink) {
-    dashboardLink.href = user.role === "donor" ? "../html/donor-dashboard.html" : "../html/patient-dashboard.html";
+    dashboardLink.href =
+      user.role === "donor"
+        ? "../html/donor-dashboard.html"
+        : "../html/patient-dashboard.html";
   }
 
   if (user.role === "donor") {
     const donor = await apiFetch("/profile/me/donor");
     document.getElementById("donorSettings").hidden = false;
-    document.getElementById("notificationRadius").value = donor.notificationRadiusKm;
-    document.getElementById("radiusLabel").textContent = `${donor.notificationRadiusKm} km`;
+    document.getElementById("notificationRadius").value =
+      donor.notificationRadiusKm;
+    document.getElementById("radiusLabel").textContent =
+      `${donor.notificationRadiusKm} km`;
     document.getElementById("isAvailable").checked = Boolean(donor.isAvailable);
     await syncDonorLocationAutomatically(user, donor);
   }
@@ -92,14 +112,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!getAccessToken() || !getCurrentUser()) {
     window.location.href = "../html/login_register.html";
     return;
-  }
-
-  const menuToggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
   }
 
   try {
@@ -119,18 +131,26 @@ document.addEventListener("DOMContentLoaded", async () => {
           fullName: document.getElementById("fullName").value.trim(),
           phone: document.getElementById("phone").value.trim() || null,
           city: document.getElementById("city").value.trim() || null,
-          emailNotifications: document.getElementById("emailNotifications").checked,
+          emailNotifications:
+            document.getElementById("emailNotifications").checked,
           smsNotifications: document.getElementById("smsNotifications").checked,
-          shareLocationAutomatically: document.getElementById("shareLocation").checked
-        })
+          shareLocationAutomatically:
+            document.getElementById("shareLocation").checked,
+        }),
       });
       showProfileMessage("Profile saved.");
       isFormChanged = false;
       markButtonAsSaved(saveBtn, "Save profile");
       await loadProfile();
-      if (document.getElementById("shareLocation").checked && getCurrentUser()?.role === "donor") {
+      if (
+        document.getElementById("shareLocation").checked &&
+        getCurrentUser()?.role === "donor"
+      ) {
         const donor = await apiFetch("/profile/me/donor");
-        await syncDonorLocationAutomatically({ shareLocationAutomatically: true }, donor);
+        await syncDonorLocationAutomatically(
+          { shareLocationAutomatically: true },
+          donor,
+        );
       }
     } catch (error) {
       showProfileMessage(error.message, true);
@@ -138,20 +158,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById("logoutButton")?.addEventListener("click", logout);
-  document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
+  document
+    .getElementById("logoutButtonMobile")
+    ?.addEventListener("click", logout);
 
   const changeEmailModal = document.getElementById("changeEmailModal");
-  const requestEmailChangeForm = document.getElementById("requestEmailChangeForm");
-  const confirmEmailChangeForm = document.getElementById("confirmEmailChangeForm");
+  const requestEmailChangeForm = document.getElementById(
+    "requestEmailChangeForm",
+  );
+  const confirmEmailChangeForm = document.getElementById(
+    "confirmEmailChangeForm",
+  );
   let requestedEmail = "";
 
-  document.getElementById("changeEmailButton")?.addEventListener("click", () => {
-    changeEmailModal.hidden = false;
-    document.getElementById("newEmail").focus();
-  });
+  document
+    .getElementById("changeEmailButton")
+    ?.addEventListener("click", () => {
+      changeEmailModal.hidden = false;
+      document.getElementById("newEmail").focus();
+    });
 
-  document.getElementById("closeEmailModal")?.addEventListener("click", closeEmailChangeModal);
-  document.querySelector("[data-close-email-modal]")?.addEventListener("click", closeEmailChangeModal);
+  document
+    .getElementById("closeEmailModal")
+    ?.addEventListener("click", closeEmailChangeModal);
+  document
+    .querySelector("[data-close-email-modal]")
+    ?.addEventListener("click", closeEmailChangeModal);
 
   requestEmailChangeForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -163,12 +195,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       await apiFetch("/profile/email-change/request", {
         method: "POST",
-        body: JSON.stringify({ email: requestedEmail })
+        body: JSON.stringify({ email: requestedEmail }),
       });
       requestEmailChangeForm.hidden = true;
       confirmEmailChangeForm.hidden = false;
       document.getElementById("emailVerificationCode").focus();
-      showEmailChangeMessage("A verification code was sent to your new email address.");
+      showEmailChangeMessage(
+        "A verification code was sent to your new email address.",
+      );
     } catch (error) {
       showEmailChangeMessage(error.message, true);
     } finally {
@@ -187,8 +221,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         method: "POST",
         body: JSON.stringify({
           email: requestedEmail,
-          code: document.getElementById("emailVerificationCode").value.trim()
-        })
+          code: document.getElementById("emailVerificationCode").value.trim(),
+        }),
       });
       document.getElementById("email").value = requestedEmail;
       showProfileMessage("Your email address was updated.");
@@ -202,9 +236,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const donorForm = document.getElementById("donorForm");
   if (donorForm) {
-    document.getElementById("notificationRadius").addEventListener("input", () => {
-      document.getElementById("radiusLabel").textContent = `${document.getElementById("notificationRadius").value} km`;
-    });
+    document
+      .getElementById("notificationRadius")
+      .addEventListener("input", () => {
+        document.getElementById("radiusLabel").textContent =
+          `${document.getElementById("notificationRadius").value} km`;
+      });
 
     donorForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -213,9 +250,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         await apiFetch("/profile/me/donor", {
           method: "PATCH",
           body: JSON.stringify({
-            notificationRadiusKm: Number(document.getElementById("notificationRadius").value),
-            isAvailable: document.getElementById("isAvailable").checked
-          })
+            notificationRadiusKm: Number(
+              document.getElementById("notificationRadius").value,
+            ),
+            isAvailable: document.getElementById("isAvailable").checked,
+          }),
         });
         showProfileMessage("Donor settings saved.");
         isFormChanged = false;
@@ -234,15 +273,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             method: "PATCH",
             body: JSON.stringify({
               latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            })
+              longitude: position.coords.longitude,
+            }),
           });
           showProfileMessage("Your donor location was updated.");
         } catch (error) {
           showProfileMessage(error.message, true);
         }
       },
-      () => showProfileMessage("Location permission is required to update your donor location.", true)
+      () =>
+        showProfileMessage(
+          "Location permission is required to update your donor location.",
+          true,
+        ),
     );
   });
 });
