@@ -54,91 +54,37 @@ async function apiFetch(path, options = {}) {
 
   if (!response.ok) {
     if (response.status === 401) clearSession();
-    const error = new Error(payload?.message || "The request could not be completed.");
-    error.statusCode = response.status;
-    throw error;
+    throw new Error(payload?.message || "The request could not be completed.");
   }
 
   return payload;
 }
 
-function getCurrentPosition() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error("Geolocation is not supported by your browser."));
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(resolve, reject, {
-      enableHighAccuracy: false,
-      timeout: 12000,
-      maximumAge: 60000,
-    });
-  });
-}
-
-async function syncDonorLocationAutomatically(user, donorProfile) {
-  const hasLocation = donorProfile?.latitude != null && donorProfile?.longitude != null;
-  if (!user?.shareLocationAutomatically && hasLocation) return donorProfile;
+async function syncDonorLocationAutomatically(user) {
+  if (!user?.shareLocationAutomatically || !navigator.geolocation) {
+    return false;
+  }
 
   try {
-    const position = await getCurrentPosition();
-    return await apiFetch("/profile/me/donor", {
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000,
+      });
+    });
+    await apiFetch("/profile/me/donor", {
       method: "PATCH",
       body: JSON.stringify({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       }),
     });
-  } catch {
-    return donorProfile;
+
+    return true;
+  } catch (error) {
+    
+    console.warn("Unable to synchronise donor location automatically.", error);
+    return false;
   }
-}
-
-async function cognitoRequest(action, payload) {
-  const response = await fetch(COGNITO_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-amz-json-1.1",
-      "X-Amz-Target": `AWSCognitoIdentityProviderService.${action}`,
-    },
-    body: JSON.stringify(payload),
-  });
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const error = new Error(body.message || "Cognito authentication could not be completed.");
-    error.code = body.__type?.split("#").pop();
-    throw error;
-  }
-  return body;
-}
-
-async function cognitoLogin(email, password) {
-  let result = await cognitoRequest("InitiateAuth", {
-    AuthFlow: "USER_PASSWORD_AUTH",
-    ClientId: COGNITO_CONFIG.clientId,
-    AuthParameters: { USERNAME: email.trim().toLowerCase(), PASSWORD: password },
-  });
-
-  if (result.ChallengeName === "NEW_PASSWORD_REQUIRED") {
-    const newPassword = window.prompt("Cognito requires a new password for this account. Enter it now:");
-    if (!newPassword) throw new Error("A new Cognito password is required before you can continue.");
-    result = await cognitoRequest("RespondToAuthChallenge", {
-      ClientId: COGNITO_CONFIG.clientId,
-      ChallengeName: "NEW_PASSWORD_REQUIRED",
-      Session: result.Session,
-      ChallengeResponses: { USERNAME: email.trim().toLowerCase(), NEW_PASSWORD: newPassword },
-    });
-  }
-
-  const accessToken = result.AuthenticationResult?.AccessToken;
-  if (!accessToken) throw new Error("Cognito did not return an access token.");
-  return accessToken;
-}
-
-async function cognitoConfirmSignUp(email, confirmationCode) {
-  return cognitoRequest("ConfirmSignUp", {
-    ClientId: COGNITO_CONFIG.clientId,
-    Username: email.trim().toLowerCase(),
-    ConfirmationCode: confirmationCode.trim(),
-  });
 }
