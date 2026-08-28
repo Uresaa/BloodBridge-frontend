@@ -12,7 +12,7 @@ function requestCard(request, action = "") {
 
 function donorOfferCard(offer) {
   const request = offer.request;
-  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>This offer is yours for 10 minutes · until ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">I'm interested</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Decline</button></div></article>`;
+  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>Other nearby donors can see this too — first to accept gets matched. Respond by ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">Accept &amp; claim</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Not this time</button></div></article>`;
 }
 
 function showError(error) {
@@ -74,11 +74,14 @@ async function loadDonorDashboard({ syncLocation = false } = {}) {
     ? offers.map(donorOfferCard).join("")
     : "<p>No active matching offers right now.</p>";
   document.getElementById("openRequests").textContent = offers.length;
-  document.querySelectorAll(".accept-button").forEach((button) => button.addEventListener("click", async () => {
+ document.querySelectorAll(".accept-button").forEach((button) => button.addEventListener("click", async () => {
     try {
       await apiFetch(`/donor-offers/${button.dataset.offerId}/accept`, { method: "POST" });
       await loadDonorDashboard();
-    } catch (error) { showError(error); }
+    } catch (error) {
+      showError(error);
+      await loadDonorDashboard();
+    }
   }));
   document.querySelectorAll(".decline-button").forEach((button) => button.addEventListener("click", async () => {
     try {
