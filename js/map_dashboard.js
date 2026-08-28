@@ -227,4 +227,19 @@ function showToast(message) {
   setTimeout(() => toast.remove(), 4000);
 }
 
-window.addEventListener("DOMContentLoaded", initBloodBridgeMap);
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!getAccessToken() || !getCurrentUser()) {
+    window.location.href = "../html/login_register.html";
+    return;
+  }
+
+  document.getElementById("logoutButton").addEventListener("click", logout);
+  document.getElementById("logoutButtonMobile")?.addEventListener("click", logout);
+
+  try {
+    await initBloodBridgeMap();
+  } catch (error) {
+    console.error(error);
+    showToast("Failed to load map.");
+  }
+});
