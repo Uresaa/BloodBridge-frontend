@@ -33,6 +33,11 @@ function getCurrentUser() {
   }
 }
 
+function mergeStoredUser(partial) {
+  const current = getCurrentUser() || {};
+  localStorage.setItem("bloodbridge.user", JSON.stringify({ ...current, ...partial }));
+}
+
 async function logout() {
   try {
     await apiFetch("/auth/logout", { method: "POST" });
@@ -60,6 +65,76 @@ async function apiFetch(path, options = {}) {
   return payload;
 }
 
+function formatDonorLocationLabel(donor) {
+  if (donor?.locationLabel) {
+    return donor.locationLabel.split(",")[0].trim() || donor.locationLabel;
+  }
+  if (donor?.latitude != null && donor?.longitude != null) {
+    return `${Number(donor.latitude).toFixed(3)}, ${Number(donor.longitude).toFixed(3)}`;
+  }
+  return "Not set";
+}
+
+async function geocodeAddress(query) {
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`,
+  );
+  const data = await response.json();
+  if (!Array.isArray(data) || !data[0]) return null;
+  return {
+    latitude: Number(data[0].lat),
+    longitude: Number(data[0].lon),
+    label: String(data[0].display_name || query).slice(0, 200),
+  };
+}
+
+async function reverseGeocode(latitude, longitude) {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+    );
+    const data = await response.json();
+    const address = data.address || {};
+    return (
+      address.city ||
+      address.town ||
+      address.village ||
+      address.municipality ||
+      data.display_name ||
+      "GPS location"
+    ).slice(0, 200);
+  } catch {
+    return "GPS location";
+  }
+}
+
+async function saveDonorCoordinates({ latitude, longitude, locationLabel, locationSource }) {
+  const coordinates = await apiFetch("/profile/me/donor", {
+    method: "PATCH",
+    body: JSON.stringify({ latitude, longitude }),
+  });
+  if (locationLabel === undefined && locationSource === undefined) {
+    return coordinates;
+  }
+  try {
+    return await apiFetch("/profile/me/donor", {
+      method: "PATCH",
+      body: JSON.stringify({ locationLabel, locationSource }),
+    });
+  } catch {
+    return { ...coordinates, locationLabel, locationSource };
+  }
+}
+
+async function setShareLocationAutomatically(enabled) {
+  const user = await apiFetch("/profile/me", {
+    method: "PATCH",
+    body: JSON.stringify({ shareLocationAutomatically: enabled }),
+  });
+  mergeStoredUser({ shareLocationAutomatically: user.shareLocationAutomatically });
+  return user;
+}
+
 async function syncDonorLocationAutomatically(user) {
   if (!user?.shareLocationAutomatically || !navigator.geolocation) {
     return false;
@@ -73,17 +148,18 @@ async function syncDonorLocationAutomatically(user) {
         maximumAge: 300000,
       });
     });
-    await apiFetch("/profile/me/donor", {
-      method: "PATCH",
-      body: JSON.stringify({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }),
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const locationLabel = await reverseGeocode(latitude, longitude);
+    await saveDonorCoordinates({
+      latitude,
+      longitude,
+      locationLabel,
+      locationSource: "gps",
     });
 
     return true;
   } catch (error) {
-    
     console.warn("Unable to synchronise donor location automatically.", error);
     return false;
   }

@@ -236,7 +236,7 @@ section h2 {
 
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 25px;
   align-items: stretch;
 }
@@ -276,6 +276,12 @@ section h2 {
 #availability {
   font-size: 2rem;
   white-space: nowrap;
+}
+
+#donorLocation {
+  font-size: 1.15rem;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .stat-card p {

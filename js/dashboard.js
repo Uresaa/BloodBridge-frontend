@@ -12,7 +12,7 @@ function requestCard(request, action = "") {
 
 function donorOfferCard(offer) {
   const request = offer.request;
-  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>Expires ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">I'm interested</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Decline</button></div></article>`;
+  return `<article class="request-card"><div class="left"><div class="blood-circle">${escapeHtml(request.bloodType)}</div><div><h3>Compatible blood request</h3><p>${Number(request.unitsNeeded)} unit(s) · ${escapeHtml(request.urgency)} · ${Number(offer.distanceKm).toFixed(1)} km away</p><p>This offer is yours for 10 minutes · until ${formatDate(offer.expiresAt)}</p></div></div><div class="right"><button data-offer-id="${escapeHtml(offer.id)}" class="accept-button">I'm interested</button><button data-offer-id="${escapeHtml(offer.id)}" class="details-button decline-button">Decline</button></div></article>`;
 }
 
 function showError(error) {
@@ -68,6 +68,8 @@ async function loadDonorDashboard({ syncLocation = false } = {}) {
   document.getElementById("welcomeName").textContent = user.fullName;
   document.getElementById("availability").textContent = profile.isAvailable ? "Available" : "Unavailable";
   document.getElementById("radius").textContent = `${profile.notificationRadiusKm} km`;
+  const locationEl = document.getElementById("donorLocation");
+  if (locationEl) locationEl.textContent = formatDonorLocationLabel(profile);
   document.getElementById("requestList").innerHTML = offers.length
     ? offers.map(donorOfferCard).join("")
     : "<p>No active matching offers right now.</p>";

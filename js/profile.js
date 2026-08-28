@@ -36,6 +36,77 @@ function closeEmailChangeModal() {
   showEmailChangeMessage("");
 }
 
+function renderDonorLocation(donor) {
+  const label = formatDonorLocationLabel(donor);
+  const current = document.getElementById("donorLocationLabel");
+  const input = document.getElementById("donorLocationInput");
+  if (current) current.textContent = label;
+  if (input && donor?.locationLabel) input.value = donor.locationLabel.split(",")[0].trim();
+}
+
+async function saveTypedDonorLocation() {
+  const query = document.getElementById("donorLocationInput").value.trim();
+  if (!query) {
+    showProfileMessage("Type a city or address first.", true);
+    return;
+  }
+
+  showProfileMessage("Looking up that location...");
+  const place = await geocodeAddress(query);
+  if (!place) {
+    showProfileMessage("That city or address could not be found.", true);
+    return;
+  }
+
+  const donor = await saveDonorCoordinates({
+    latitude: place.latitude,
+    longitude: place.longitude,
+    locationLabel: place.label,
+    locationSource: "manual",
+  });
+  await setShareLocationAutomatically(false);
+  document.getElementById("shareLocation").checked = false;
+  renderDonorLocation(donor);
+  document.getElementById("donorLocationInput").value = query;
+  showProfileMessage(
+    `Matching location set to ${formatDonorLocationLabel(donor)}. GPS will not overwrite it until you turn auto-update back on.`,
+  );
+  isFormChanged = false;
+}
+
+async function saveGpsDonorLocation() {
+  if (!navigator.geolocation) {
+    showProfileMessage("Geolocation is not supported in this browser.", true);
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      try {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const locationLabel = await reverseGeocode(latitude, longitude);
+        const donor = await saveDonorCoordinates({
+          latitude,
+          longitude,
+          locationLabel,
+          locationSource: "gps",
+        });
+        renderDonorLocation(donor);
+        showProfileMessage("Your GPS location was saved.");
+      } catch (error) {
+        showProfileMessage(error.message, true);
+      }
+    },
+    () =>
+      showProfileMessage(
+        "Location permission is required to use GPS.",
+        true,
+      ),
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
+  );
+}
+
 function trackFormChanges() {
   if (isTrackingSet) return;
 
@@ -74,9 +145,6 @@ async function loadProfile() {
   document.getElementById("smsNotifications").checked = Boolean(
     user.smsNotifications,
   );
-  document.getElementById("shareLocation").checked = Boolean(
-    user.shareLocationAutomatically,
-  );
 
   setText("profileTitle", user.fullName);
   setText(
@@ -101,7 +169,14 @@ async function loadProfile() {
     document.getElementById("radiusLabel").textContent =
       `${donor.notificationRadiusKm} km`;
     document.getElementById("isAvailable").checked = Boolean(donor.isAvailable);
-    await syncDonorLocationAutomatically(user, donor);
+    document.getElementById("shareLocation").checked = Boolean(
+      user.shareLocationAutomatically,
+    );
+    renderDonorLocation(donor);
+    await syncDonorLocationAutomatically(user);
+    if (user.shareLocationAutomatically) {
+      renderDonorLocation(await apiFetch("/profile/me/donor"));
+    }
   }
 
   trackFormChanges();
@@ -134,24 +209,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           emailNotifications:
             document.getElementById("emailNotifications").checked,
           smsNotifications: document.getElementById("smsNotifications").checked,
-          shareLocationAutomatically:
-            document.getElementById("shareLocation").checked,
         }),
       });
       showProfileMessage("Profile saved.");
       isFormChanged = false;
       markButtonAsSaved(saveBtn, "Save profile");
       await loadProfile();
-      if (
-        document.getElementById("shareLocation").checked &&
-        getCurrentUser()?.role === "donor"
-      ) {
-        const donor = await apiFetch("/profile/me/donor");
-        await syncDonorLocationAutomatically(
-          { shareLocationAutomatically: true },
-          donor,
-        );
-      }
     } catch (error) {
       showProfileMessage(error.message, true);
     }
@@ -245,7 +308,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     donorForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const saveBtn = donorForm.querySelector(".save-btn");
+      const saveBtn = donorForm.querySelector("button[type='submit']");
       try {
         await apiFetch("/profile/me/donor", {
           method: "PATCH",
@@ -256,6 +319,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             isAvailable: document.getElementById("isAvailable").checked,
           }),
         });
+        const shareAutomatically =
+          document.getElementById("shareLocation").checked;
+        await setShareLocationAutomatically(shareAutomatically);
+        if (shareAutomatically) {
+          await syncDonorLocationAutomatically({
+            shareLocationAutomatically: true,
+          });
+          renderDonorLocation(await apiFetch("/profile/me/donor"));
+        }
         showProfileMessage("Donor settings saved.");
         isFormChanged = false;
         markButtonAsSaved(saveBtn, "Save donor settings");
@@ -265,27 +337,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  document.getElementById("locationButton")?.addEventListener("click", () => {
-    navigator.geolocation?.getCurrentPosition(
-      async (position) => {
-        try {
-          await apiFetch("/profile/me/donor", {
-            method: "PATCH",
-            body: JSON.stringify({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            }),
-          });
-          showProfileMessage("Your donor location was updated.");
-        } catch (error) {
-          showProfileMessage(error.message, true);
-        }
-      },
-      () =>
-        showProfileMessage(
-          "Location permission is required to update your donor location.",
-          true,
-        ),
-    );
-  });
+  document
+    .getElementById("setTypedLocationButton")
+    ?.addEventListener("click", () => {
+      saveTypedDonorLocation().catch((error) =>
+        showProfileMessage(error.message, true),
+      );
+    });
+
+  document
+    .getElementById("locationButton")
+    ?.addEventListener("click", saveGpsDonorLocation);
+
+  document
+    .getElementById("donorLocationInput")
+    ?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        saveTypedDonorLocation().catch((error) =>
+          showProfileMessage(error.message, true),
+        );
+      }
+    });
 });
