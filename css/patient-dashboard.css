@@ -234,33 +234,45 @@ section h2{
 
 
 
-.right{
-
-    text-align:right;
-
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-
-
-.right button{
-
-    margin-top:15px;
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:.3s;
-
+.accept-button,
+.decline-button,
+.details-button,
+.complete-button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin-top: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #ef4444;
+  color: white;
 }
 
+.accept-button:hover,
+.complete-button:hover {
+  background: #d93737;
+}
 
+.decline-button,
+.details-button {
+  background: #f1f5f9;
+  color: #1f3558;
+}
 
-.right button:hover{
-
-    background:#d93737;
-
+.decline-button:hover,
+.details-button:hover {
+  background: #e2e8f0;
 }
 
 
@@ -489,9 +501,7 @@ section h2{
 
 
 .right{
-
-    text-align:left;
-
+    justify-content: flex-start
 }
 
 
