@@ -1,42 +1,71 @@
-# BloodBridge
+# BloodBridge frontend
 
-BloodBridge is a web application that connects blood donors with patients and urgent blood requests.
+Static web interface for BloodBridge. It lets donors, patients, and hospitals
+register, sign in, create blood requests, manage profiles, and respond to
+donor offers.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) installed on your computer.
+- Node.js 18 or newer (no npm packages are required)
+- A running [BloodBridge backend](https://github.com/adnaslani/BloodBridge-backend)
+- PostgreSQL, configured through the backend only
 
-To check whether it is installed, open a terminal and run:
+The frontend uses only browser APIs and Node's built-in modules. Therefore it
+has no `package.json`, `requirements.txt`, or dependency-installation step.
 
-```bash
-node -v
-```
+## Run locally
 
-## Starting the Project
-
-1. Open a terminal in the `BloodBridge` project folder.
-2. Start the server with:
+1. Clone both repositories next to each other:
 
    ```bash
+   git clone https://github.com/Uresaa/BloodBridge-frontend.git
+   git clone https://github.com/adnaslani/BloodBridge-backend.git
+   ```
+
+2. Start the backend first. Follow its README, using these local values in
+   `BloodBridge-backend/.env`:
+
+   ```dotenv
+   PORT=5000
+   FRONTEND_ORIGIN=http://localhost:3000
+   ```
+
+3. The application automatically uses `http://localhost:5000/api` when it is
+   opened on `localhost`. In deployment, it uses a same-origin `/api` route.
+   To target a different API, define `window.BLOODBRIDGE_API_URL` before
+   `js/api.js` loads.
+
+4. Start the static development server:
+
+   ```bash
+   cd BloodBridge-frontend
    node server.mjs
    ```
 
-3. The local address will appear in the terminal:
+5. Open [http://localhost:3000/html/index.html](http://localhost:3000/html/index.html).
 
-   ```text
-   BloodBridge is running at http://localhost:3000/html/index.html
-   ```
+## Useful commands
 
-4. Open it in your browser:
+```bash
+# Start the frontend server
+node server.mjs
 
-   ```text
-   http://localhost:3000
-   ```
-
-## Stopping the Server
-
-In the terminal where the server is running, press:
-
-```text
+# Stop the server
 Ctrl + C
 ```
+
+## Project structure
+
+- `html/` — application pages
+- `css/` — styles
+- `js/` — browser logic and API client
+- `images/` — visual assets
+- `server.mjs` — minimal static development server
+
+## Security notes
+
+- Never commit backend `.env` files, database passwords, API keys, or access
+  tokens.
+- Configure the backend `FRONTEND_ORIGIN` with the exact frontend origin.
+- Browser access tokens are stored in local storage and are cleared on logout
+  or when the API returns `401 Unauthorized`.

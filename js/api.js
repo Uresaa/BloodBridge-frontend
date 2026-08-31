@@ -1,6 +1,6 @@
 const API_URL = window.BLOODBRIDGE_API_URL
   || (["localhost", "127.0.0.1"].includes(window.location.hostname)
-    ? "http://18.184.13.232:5002/api"
+    ? "http://localhost:5000/api"
     : "/api");
 
 const COGNITO_CONFIG = Object.freeze({
