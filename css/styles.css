@@ -22,11 +22,14 @@ body {
   position: sticky;
   top: 15px;
   width: calc(100% - 40px);
+  max-width: 1440px;
+  min-height: 76px;
   margin: 15px auto 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 35px;
+  padding: 8px clamp(16px, 2.5vw, 35px);
+  gap: clamp(8px, 1.5vw, 24px);
   background: rgba(29, 53, 87, 0.93);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -64,13 +67,15 @@ body {
 .nav-logo {
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
 }
 
 .nav-logo img {
-  width: 170px !important;
-  height: 105px !important;
+  width: clamp(115px, 12vw, 160px) !important;
+  height: clamp(58px, 7vw, 82px) !important;
   object-fit: contain;
   transition: 0.4s ease;
+  transform: scale(1.45);
 }
 
 .nav-logo img:hover {
@@ -80,19 +85,24 @@ body {
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 15px;
+  gap: clamp(2px, 0.8vw, 14px);
   padding: 0;
   margin: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
 }
 
 .nav-links a {
   position: relative;
+  display: block;
   text-decoration: none;
   color: #ffffff;
   font-weight: 600;
-  font-size: 15px;
+  font-size: clamp(13px, 1.2vw, 15px);
   letter-spacing: 0.3px;
-  padding: 12px 18px;
+  white-space: nowrap;
+  padding: 10px clamp(8px, 1vw, 16px);
   border-radius: 12px;
   transition: 0.35s;
 }
@@ -144,7 +154,8 @@ body {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: clamp(6px, 1vw, 14px);
+  flex: 0 0 auto;
 }
 
 .btn-outline,
@@ -1180,41 +1191,6 @@ body {
   }
 }
 
-.navbar {
-  max-width: 1440px;
-  min-height: 76px;
-  padding: 8px clamp(16px, 2.5vw, 35px);
-  gap: clamp(8px, 1.5vw, 24px);
-}
-
-.nav-logo {
-  flex: 0 0 auto;
-}
-
-.nav-logo img {
-  width: clamp(115px, 12vw, 160px) !important;
-  height: clamp(58px, 7vw, 82px) !important;
-  transform: scale(1.45);
-}
-
-.nav-links {
-  flex: 1 1 auto;
-  justify-content: center;
-  gap: clamp(2px, 0.8vw, 14px);
-  min-width: 0;
-}
-
-.nav-links a {
-  display: block;
-  white-space: nowrap;
-  padding: 10px clamp(8px, 1vw, 16px);
-  font-size: clamp(13px, 1.2vw, 15px);
-}
-
-.nav-actions {
-  flex: 0 0 auto;
-  gap: clamp(6px, 1vw, 14px);
-}
 
 .mobile-nav-actions {
   display: none;

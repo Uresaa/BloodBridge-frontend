@@ -221,13 +221,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let finalLng = userLng;
 
         if (!finalLat || !finalLng) {
-          const coords = await geocodeLocationName(locationText);
+         const coords = await geocodeLocationName(locationText);
           if (coords) {
             finalLat = coords.lat;
             finalLng = coords.lng;
           } else {
             finalLat = 42.6667;
             finalLng = 21.1667;
+            if (locationError) {
+              locationError.innerText = "Couldn't pinpoint that exact address — using an approximate location for now.";
+            }
           }
         }
 
